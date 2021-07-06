@@ -1,7 +1,13 @@
 import { Action } from "./actions";
 
+export type Note = {
+  id: number;
+  content: string;
+  tag?: string;
+};
+
 export interface NotesState {
-  notes: string[];
+  notes: Note[];
 }
 
 const initialState: NotesState = {
