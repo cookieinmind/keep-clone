@@ -1,5 +1,5 @@
 import { Note } from "../state/models/note";
-
+import NoteCard from "./NoteCard";
 export interface NoteListProps {
   notes: Note[];
 }
@@ -10,7 +10,7 @@ const NoteList: React.FunctionComponent<NoteListProps> = ({ notes }) => {
       Notes
       <ul>
         {notes.map((note) => {
-          return <li key={note.content}>{note.content}</li>;
+          return <NoteCard key={note.content} note={note} />;
         })}
       </ul>
     </div>
