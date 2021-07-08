@@ -2,6 +2,10 @@ import React from "react";
 import Layout from "./shared/Layout";
 import InputField from "./inputFields/InputField";
 import { Container, makeStyles } from "@material-ui/core";
+import { useSelector } from "react-redux";
+import { NotesState } from "./state/reducers/noteReducer";
+import NoteList from "./NoteList/NoteList";
+import { useEffect } from "react";
 
 const useStyles = makeStyles({
   container: {
@@ -11,13 +15,15 @@ const useStyles = makeStyles({
 
 function App() {
   const styles = useStyles();
+  const notes = useSelector<NotesState, NotesState["notes"]>((n) => n.notes);
+
+  useEffect(() => console.log("notes:", notes), [notes]);
 
   return (
     <Container className={styles.container}>
       <Layout>
-        <InputField
-          addnote={(note) => console.log("implement the addNote method")}
-        />
+        <InputField />
+        {notes?.length > 0 && <NoteList notes={notes} />}
       </Layout>
     </Container>
   );

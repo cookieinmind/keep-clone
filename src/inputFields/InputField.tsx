@@ -1,22 +1,16 @@
 import React from "react";
 import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { NotesState } from "../state/reducers/noteReducer";
+import { useDispatch } from "react-redux";
 import { CompactInput } from "./CompactInput";
 import { FullInput } from "./FullInput";
 import { Note } from "../state/models/note";
+import { addNote } from "../state/actions/actions";
 
-export interface InputFieldProps {
-  addnote: (note: Note) => void;
-}
+export interface InputFieldProps {}
 
-const InputField: React.FunctionComponent<InputFieldProps> = ({
-  addnote: addNote,
-}) => {
+const InputField: React.FunctionComponent<InputFieldProps> = () => {
   //Variables
   const [isInputFocused, setIsInputFocused] = useState(false);
-
-  const notes = useSelector<NotesState, NotesState["notes"]>((n) => n.notes);
 
   const dispatch = useDispatch();
 
@@ -26,6 +20,7 @@ const InputField: React.FunctionComponent<InputFieldProps> = ({
   };
 
   const handleSubmition = (note: Note) => {
+    console.log("field");
     dispatch(addNote(note));
   };
 
@@ -34,8 +29,6 @@ const InputField: React.FunctionComponent<InputFieldProps> = ({
     display: "grid",
     gridTemplateColumns: "repeat(12, 1fr)",
     padding: "50px 100px",
-    gridTemplateRows: "1fr 3fr",
-    rowGap: "50px",
   };
   return (
     <div style={containerStyles}>
@@ -51,11 +44,6 @@ const InputField: React.FunctionComponent<InputFieldProps> = ({
           setIsInputFocused={handleChangeOfInput}
         />
       )}
-      <ul>
-        {notes.map((note) => {
-          return <li key={note.id}>{note.content}</li>;
-        })}
-      </ul>
     </div>
 
     // <div style={containerStyles}>

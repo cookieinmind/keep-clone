@@ -2,13 +2,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useRef } from "react";
 import { Note } from "../state/models/note";
-import {
-  Typography,
-  makeStyles,
-  TextField,
-  Paper,
-  Button,
-} from "@material-ui/core";
+import { makeStyles, TextField, Paper, Button } from "@material-ui/core";
 import { blue } from "@material-ui/core/colors";
 
 const useStyles = makeStyles({
@@ -45,37 +39,43 @@ export interface iFullInputProps {
 }
 
 export const FullInput: React.FC<iFullInputProps> = ({
-  isInputFocused,
   setIsInputFocused,
+  addNote,
 }) => {
+  const hideThisComponent = () => setIsInputFocused(false);
   const classes = useStyles();
-
   const noteContentInput = useRef<HTMLInputElement>(null);
-  const noteTagInput = useRef<HTMLInputElement>(null);
+  // const noteTagInput = useRef<HTMLInputElement>(null);
   const [noteContent, setNoteContent] = React.useState("");
-  const [noteTag, setNoteTag] = React.useState("");
+  // const [noteTag, setNoteTag] = React.useState("");
 
   //Focus on the input as soon as it gets rendered
   useEffect(() => {
     noteContentInput.current?.focus();
-    console.log("focusing on:", noteContentInput, noteContentInput.current);
+    // console.log("focusing on:", noteContentInput, noteContentInput.current);
+    console.log("focusing");
   }, [noteContentInput]);
 
   const handleLostOfFocus = (event: React.FocusEvent<HTMLInputElement>) => {
-    if (event.relatedTarget === null) setIsInputFocused(false);
-
-    console.log("e:", event);
+    if (event.relatedTarget === null) hideThisComponent();
   };
 
   const handleContentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNoteContent(event.target.value);
   };
 
-  const handleTagChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNoteTag(event.target.value);
-  };
+  // const handleTagChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   // setNoteTag(event.target.value);
+  // };
 
-  const inputStyles = {};
+  const handleSubmition = () => {
+    console.log("full");
+    addNote({
+      content: noteContent,
+    });
+    //Desactiva este componente luego de haber cumplido su proposito
+    hideThisComponent();
+  };
 
   return (
     <Paper square className={classes.container}>
@@ -87,7 +87,9 @@ export const FullInput: React.FC<iFullInputProps> = ({
         inputRef={noteContentInput}
         value={noteContent}
       />
-      <Button className={classes.submitButton}>Save</Button>
+      <Button className={classes.submitButton} onClick={handleSubmition}>
+        Save
+      </Button>
     </Paper>
     // <div style={containerStyles}>
     //   <Typography variant="h6">Hey</Typography>
