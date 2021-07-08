@@ -1,4 +1,5 @@
 import { Box, makeStyles } from "@material-ui/core";
+import Sidebar from "./Sidebar";
 
 const useStyles = makeStyles({
   box: {
@@ -14,8 +15,8 @@ const Layout: React.FunctionComponent<LayoutProps> = ({ children }) => {
   const styles = useStyles();
   return (
     <Box className={styles.box}>
-      <h1>Layout component</h1>
-      <p>Here goes the top bar</p>
+      {/* Sidebar */}
+      <Sidebar />
       {children}
     </Box>
   );
