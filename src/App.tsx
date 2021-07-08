@@ -1,59 +1,25 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Input } from "./Input";
-import { NotesState } from "./noteReducer";
-import { addNote } from "./actions";
-import { FullInput } from "./FullInput";
-import { useState } from "react";
-import { Note } from "./noteReducer";
+import Layout from "./shared/Layout";
+import InputField from "./inputFields/InputField";
+import { Container, makeStyles } from "@material-ui/core";
+
+const useStyles = makeStyles({
+  container: {
+    height: "100vh",
+  },
+});
 
 function App() {
-  //Variables
-  const [isInputFocused, setIsInputFocused] = useState(false);
-
-  const notes = useSelector<NotesState, NotesState["notes"]>((n) => n.notes);
-
-  const dispatch = useDispatch();
-
-  // Functions
-  const handleChangeOfInput = (val: boolean) => {
-    setIsInputFocused(val);
-  };
-
-  const handleSubmition = (note: Note) => {
-    dispatch(addNote(note));
-  };
-
-  //Styles
-  const containerStyles = {
-    display: "grid",
-    gridTemplateColumns: "repeat(12, 1fr)",
-    padding: "50px 100px",
-    gridTemplateRows: "1fr 3fr",
-    rowGap: "50px",
-    height: "calc(100vh - 150px)",
-  };
+  const styles = useStyles();
 
   return (
-    <div style={containerStyles}>
-      {isInputFocused ? (
-        <FullInput
-          isInputFocused={isInputFocused}
-          setIsInputFocused={handleChangeOfInput}
-          addNote={handleSubmition}
+    <Container className={styles.container}>
+      <Layout>
+        <InputField
+          addnote={(note) => console.log("implement the addNote method")}
         />
-      ) : (
-        <Input
-          isInputFocused={isInputFocused}
-          setIsInputFocused={handleChangeOfInput}
-        />
-      )}
-      <ul>
-        {notes.map((note) => {
-          return <li key={note.id}>{note.content}</li>;
-        })}
-      </ul>
-    </div>
+      </Layout>
+    </Container>
   );
 }
 

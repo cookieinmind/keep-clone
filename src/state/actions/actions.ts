@@ -1,4 +1,4 @@
-import { Note } from "./noteReducer";
+import { Note } from "../models/note";
 
 export type Action = {
   type: "ADD_NOTE";

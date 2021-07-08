@@ -1,10 +1,5 @@
-import { Action } from "./actions";
-
-export type Note = {
-  id: number;
-  content: string;
-  tag?: string;
-};
+import { Action } from "../actions/actions";
+import { Note } from "../models/note";
 
 export interface NotesState {
   notes: Note[];
