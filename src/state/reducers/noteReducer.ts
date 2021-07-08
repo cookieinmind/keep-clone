@@ -8,28 +8,30 @@ export interface NotesState {
 const initialState: NotesState = {
   notes: [
     {
+      id: 0,
+      content: "Add new notes to the top",
+      tag: "to do",
+    },
+    {
       id: 1,
-      content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur dictum tincidunt. Vivamus viverra lacinia orci, eu tincidunt neque convallis in. ",
-      tag: "work",
+      content: "Make the fonts sizes uniform",
+      tag: "to do",
     },
     {
       id: 2,
-      content:
-        "Quisque maximus condimentum lorem et sollicitudin. Donec vitae dui finibus, lacinia lacus at, volutpat urna. Etiam dictum tortor a massa convallis venenatis. Suspendisse pretium quam felis, a blandit leo feugiat nec. Praesent a iaculis nibh. Donec rhoncus quis lorem eu lobortis",
-      tag: "work",
+      content: "Add a way to check the notes",
+      tag: "to do",
     },
+
     {
       id: 3,
-      content:
-        "Donec ac mauris nec erat ultricies rhoncus sagittis eu diam. Cras gravida malesuada lectus id dignissim. Proin hendrerit placerat ipsum. ",
-      tag: "work",
+      content: "Add a way to add tags to a note",
+      tag: "to do",
     },
     {
       id: 4,
-      content:
-        " Cras scelerisque tortor arcu, volutpat tempor quam vehicula eget. Quisque sed ante eu justo accumsan varius. Ut ut euismod mauris.",
-      tag: "work",
+      content: "Add a side menu with each category",
+      tag: "to do",
     },
   ],
 };
@@ -43,7 +45,7 @@ export const notesReducer = (
 
   switch (action.type) {
     case "ADD_NOTE":
-      return { ...state, notes: [...state.notes, action.payload] };
+      return { ...state, notes: [action.payload, ...state.notes] };
     default:
       return state;
   }

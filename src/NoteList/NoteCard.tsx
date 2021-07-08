@@ -32,6 +32,8 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
+const breakpoints = {};
+
 const NoteCard: React.FunctionComponent<NoteCardProps> = ({ note }) => {
   const classes = useStyles();
 
