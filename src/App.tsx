@@ -6,8 +6,8 @@ import { useSelector } from "react-redux";
 import { NotesState } from "./state/reducers/noteReducer";
 import NoteList from "./NoteList/NoteList";
 import { useEffect } from "react";
-import { useQuery } from "react-query";
-import { GetNotes } from "./API";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { DeleteNote, GetNotes } from "./API";
 import { Note } from "./state/models/note";
 
 const useStyles = makeStyles({
@@ -18,15 +18,33 @@ const useStyles = makeStyles({
 
 function App() {
   const styles = useStyles();
+  const queryClient = useQueryClient();
 
   // const notes = useSelector<NotesState, NotesState["notes"]>((n) => n.notes);
   const { data: notes } = useQuery<Note[], Error>("notes", GetNotes);
+
+  //Method to call to detele a note
+  const handleNoteDelete = async (note: Note) => {
+    await mutateAsync(note);
+  };
+
+  //What happens AFTER a note is deleted from the server
+  const onNoteDeletion = () => {
+    queryClient.invalidateQueries("notes");
+    console.log("note deleted");
+  };
+
+  const { mutateAsync } = useMutation(DeleteNote, {
+    onSuccess: onNoteDeletion,
+  });
 
   return (
     <Container className={styles.container}>
       <Layout>
         <InputField />
-        {notes !== undefined && notes?.length > 0 && <NoteList notes={notes} />}
+        {notes !== undefined && notes?.length > 0 && (
+          <NoteList notes={notes} deteleteNote={handleNoteDelete} />
+        )}
       </Layout>
     </Container>
   );

@@ -7,3 +7,15 @@ export const GetNotes = async (): Promise<Note[]> => {
   const response = await fetch(BASE_URL);
   return response.json();
 };
+
+export const DeleteNote = async (note: Note) => {
+  const id = note.id;
+
+  const url = BASE_URL + "/" + id;
+
+  const body = { method: "DELETE" };
+
+  const response = await fetch(url, body);
+
+  return response.json();
+};

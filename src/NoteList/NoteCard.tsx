@@ -19,6 +19,7 @@ import { Note } from "../state/models/note";
 
 export interface NoteCardProps {
   note: Note;
+  deteleteNote: (note: Note) => void;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -32,10 +33,15 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const breakpoints = {};
-
-const NoteCard: React.FunctionComponent<NoteCardProps> = ({ note }) => {
+const NoteCard: React.FunctionComponent<NoteCardProps> = ({
+  note,
+  deteleteNote,
+}) => {
   const classes = useStyles();
+
+  const handleNoteDelete = () => {
+    deteleteNote(note);
+  };
 
   return (
     <Card className={classes.root}>
@@ -79,7 +85,7 @@ const NoteCard: React.FunctionComponent<NoteCardProps> = ({ note }) => {
         </IconButton>
 
         {/* Delete */}
-        <IconButton aria-label="delete">
+        <IconButton aria-label="delete" onClick={handleNoteDelete}>
           <DeleteIcon fontSize="small" />
         </IconButton>
       </CardActions>

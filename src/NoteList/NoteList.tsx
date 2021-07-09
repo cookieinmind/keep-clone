@@ -4,6 +4,7 @@ import NoteCard from "./NoteCard";
 
 export interface NoteListProps {
   notes: Note[];
+  deteleteNote: (note: Note) => void;
 }
 
 const breakpoints = {
@@ -13,7 +14,10 @@ const breakpoints = {
   450: 1,
 };
 
-const NoteList: React.FunctionComponent<NoteListProps> = ({ notes }) => {
+const NoteList: React.FunctionComponent<NoteListProps> = ({
+  notes,
+  deteleteNote,
+}) => {
   return (
     <Masonry
       breakpointCols={breakpoints}
@@ -22,7 +26,7 @@ const NoteList: React.FunctionComponent<NoteListProps> = ({ notes }) => {
     >
       {notes.map((note) => (
         <div key={note.id}>
-          <NoteCard note={note} />
+          <NoteCard note={note} deteleteNote={deteleteNote} />
         </div>
       ))}
     </Masonry>
