@@ -1,4 +1,4 @@
-import { Box, makeStyles } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 import React from "react";
 import clsx from "clsx";
 import { createStyles, useTheme, Theme } from "@material-ui/core/styles";
@@ -17,7 +17,6 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
-import { useEffect } from "react";
 
 const drawerWidth = 240;
 
@@ -86,6 +85,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
+
 export interface LayoutProps {
   children: React.ReactNode;
 }
