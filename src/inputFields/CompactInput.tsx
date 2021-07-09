@@ -1,5 +1,4 @@
 import React from "react";
-import { useRef } from "react";
 import { Paper, TextField, makeStyles } from "@material-ui/core";
 import { blue } from "@material-ui/core/colors";
 
@@ -30,7 +29,6 @@ export const CompactInput: React.FC<iInputProps> = ({
   setIsInputFocused,
 }) => {
   const classes = useStyles();
-  const input = useRef(null);
 
   const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
     setIsInputFocused(true);
