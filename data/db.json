@@ -1,9 +1,29 @@
 {
   "notes": [
     {
-      "id": 1,
-      "content": "w",
-      "tag": "work"
+      "content": "implementa otro field para agregar tags",
+      "tag": "uncategorized",
+      "id": 1
+    },
+    {
+      "content": "enter para salvar notas",
+      "tag": "uncategorized",
+      "id": 2
+    },
+    {
+      "content": "multiple line notes",
+      "tag": "uncategorized",
+      "id": 3
+    },
+    {
+      "content": "make the sidebar show tags",
+      "tag": "uncategorized",
+      "id": 4
+    },
+    {
+      "content": "impelement deleted and archived folders",
+      "tag": "uncategorized",
+      "id": 5
     }
   ]
 }

@@ -21,6 +21,8 @@ export const DeleteNote = async (note: Note) => {
 };
 
 export const AddNote = async (note: Note): Promise<Note> => {
+  if (!note.tag) note.tag = "uncategorized";
+
   const body = {
     method: "POST",
     headers: { "Content-Type": "application/json" },

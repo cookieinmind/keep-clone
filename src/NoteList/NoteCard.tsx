@@ -28,7 +28,10 @@ const useStyles = makeStyles((theme: Theme) =>
       maxWidth: 345,
     },
     actionsContainer: {
-      justifyContent: "space-around",
+      justifyContent: "flex-end",
+    },
+    noteTitle: {
+      fontSize: "2rem",
     },
   })
 );
@@ -48,17 +51,24 @@ const NoteCard: React.FunctionComponent<NoteCardProps> = ({
       <CardHeader
         // Title
         title={note.tag}
+        titleTypographyProps={{
+          variant: "button",
+          component: "span",
+          color: "textSecondary",
+        }}
+        // Date
+        subheader="September 14, 2016"
+        subheaderTypographyProps={{ variant: "caption", component: "span" }}
+        // Date
         action={
           <IconButton aria-label="add to favorites">
             <StarIcon fontSize="small" />
           </IconButton>
         }
-        // Date
-        subheader="September 14, 2016"
       />
       {/* NoteContent */}
       <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
+        <Typography variant="h6" component="p">
           {note.content}
         </Typography>
       </CardContent>
@@ -66,23 +76,23 @@ const NoteCard: React.FunctionComponent<NoteCardProps> = ({
       {/* Actions */}
       <CardActions className={classes.actionsContainer}>
         {/* Reminder */}
-        <IconButton aria-label="add reminder">
+        {/* <IconButton aria-label="add reminder">
           <AddAlertIcon fontSize="small" />
-        </IconButton>
+        </IconButton> */}
         {/* Archive */}
-        <IconButton aria-label="archive note">
+        {/* <IconButton aria-label="archive note">
           <ArchiveIcon fontSize="small" />
-        </IconButton>
+        </IconButton> */}
 
         {/* Image */}
-        <IconButton aria-label="upload image">
+        {/* <IconButton aria-label="upload image">
           <ImageIcon fontSize="small" />
-        </IconButton>
+        </IconButton> */}
 
         {/* Options */}
-        <IconButton aria-label="more">
+        {/* <IconButton aria-label="more">
           <MoreVertIcon fontSize="small" />
-        </IconButton>
+        </IconButton> */}
 
         {/* Delete */}
         <IconButton aria-label="delete" onClick={handleNoteDelete}>

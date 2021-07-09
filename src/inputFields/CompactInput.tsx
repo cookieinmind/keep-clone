@@ -7,15 +7,19 @@ const useStyles = makeStyles({
     backgroundColor: "#121212",
   },
   container: {
-    background: blue[500],
+    // background: blue[500],
     width: "100%",
     gridColumn: "5/9",
-    display: "flex",
-    justifyContent: "center",
-    maxHeight: "100px",
+    // display: "flex",
+    // justifyContent: "center",
+    // maxHeight: "100px",
     height: "100px",
-    padding: "8px 16px",
-    gap: "24px",
+    // padding: "8px 16px",
+    // gap: "24px",
+  },
+  input: {
+    height: "100%",
+    width: "100%",
   },
 });
 
@@ -36,7 +40,11 @@ export const CompactInput: React.FC<iInputProps> = ({
 
   return (
     <Paper square className={classes.container}>
-      <TextField placeholder="Take a note..." onFocus={handleFocus} />
+      <TextField
+        className={classes.input}
+        placeholder="Take a note..."
+        onFocus={handleFocus}
+      />
     </Paper>
   );
 };
