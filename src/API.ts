@@ -19,3 +19,14 @@ export const DeleteNote = async (note: Note) => {
 
   return response.json();
 };
+
+export const AddNote = async (note: Note): Promise<Note> => {
+  const body = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(note),
+  };
+  const response = await fetch(BASE_URL, body);
+
+  return response.json();
+};

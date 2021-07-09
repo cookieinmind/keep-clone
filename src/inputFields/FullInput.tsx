@@ -91,33 +91,5 @@ export const FullInput: React.FC<iFullInputProps> = ({
         Save
       </Button>
     </Paper>
-    // <div style={containerStyles}>
-    //   <Typography variant="h6">Hey</Typography>
-
-    //   {/* Content */}
-    //   <input
-    //     className={classes.test}
-    //     // style={inputStyles}
-    //     value={noteContent}
-    //     ref={noteContentInput}
-    //     onBlur={handleLostOfFocus}
-    //     onChange={handleContentChange}
-    //     type="text"
-    //     name="content"
-    //     placeholder="FUUUUULLL"
-    //   />
-
-    //   {/* Tag */}
-    //   <input
-    //     style={inputStyles}
-    //     value={noteTag}
-    //     ref={noteTagInput}
-    //     onBlur={handleLostOfFocus}
-    //     onChange={handleTagChange}
-    //     type="text"
-    //     name="tag"
-    //     placeholder="FUUUUULLL"
-    //   />
-    // </div>
   );
 };

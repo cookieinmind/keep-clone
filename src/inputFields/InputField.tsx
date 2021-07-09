@@ -1,10 +1,10 @@
 import React from "react";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 import { CompactInput } from "./CompactInput";
 import { FullInput } from "./FullInput";
 import { Note } from "../state/models/note";
-import { addNote } from "../state/actions/actions";
+import { useMutation, useQueryClient } from "react-query";
+import { AddNote } from "../API";
 
 export interface InputFieldProps {}
 
@@ -12,16 +12,18 @@ const InputField: React.FunctionComponent<InputFieldProps> = () => {
   //Variables
   const [isInputFocused, setIsInputFocused] = useState(false);
 
-  const dispatch = useDispatch();
+  const { mutateAsync } = useMutation(AddNote);
+
+  const qryClient = useQueryClient();
 
   // Functions
   const handleChangeOfInput = (val: boolean) => {
     setIsInputFocused(val);
   };
 
-  const handleSubmition = (note: Note) => {
-    console.log("field");
-    dispatch(addNote(note));
+  const handleSubmition = async (note: Note) => {
+    await mutateAsync(note);
+    qryClient.invalidateQueries("notes");
   };
 
   //Styles
@@ -45,14 +47,6 @@ const InputField: React.FunctionComponent<InputFieldProps> = () => {
         />
       )}
     </div>
-
-    // <div style={containerStyles}>
-    //   <FullInput
-    //     isInputFocused={isInputFocused}
-    //     setIsInputFocused={handleChangeOfInput}
-    //     addNote={handleSubmition}
-    //   />
-    // </div>
   );
 };
 
