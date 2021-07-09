@@ -20,7 +20,7 @@ code {
   width: auto;
 }
 .my-masonry-grid_column {
-  padding-left: 30px; /* gutter size */
+  padding-left: 15px; /* gutter size */
   background-clip: padding-box;
 }
 
@@ -28,5 +28,5 @@ code {
 .my-masonry-grid_column > div {
   /* change div to reference your elements you put in <Masonry> */
   /* background: grey; */
-  margin-bottom: 30px;
+  margin-bottom: 15px;
 }
