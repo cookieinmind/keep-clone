@@ -2,18 +2,18 @@ import React from "react";
 import { useEffect } from "react";
 import { useRef } from "react";
 import { Note } from "../state/models/note";
-import { makeStyles, TextField, Paper, Button } from "@material-ui/core";
-import { blue } from "@material-ui/core/colors";
+import { makeStyles, Paper, Button } from "@material-ui/core";
+import { InputBase } from "@material-ui/core";
 
 const useStyles = makeStyles({
   test: {
     backgroundColor: "#121212",
   },
   container: {
-    // backgroundColor: blue[200],
     width: "100%",
     display: "flex",
-    height: "100px",
+    height: "auto",
+    minHeight: "100px",
     flexDirection: "column",
     alignItems: "flex-end",
     padding: "8px 16px",
@@ -25,6 +25,7 @@ const useStyles = makeStyles({
   },
   textField: {
     width: "100%",
+    display: "flex",
     border: "0px solid black",
     "&::after": {
       content: "-",
@@ -45,14 +46,16 @@ export const FullInput: React.FC<iFullInputProps> = ({
   const hideThisComponent = () => setIsInputFocused(false);
   const classes = useStyles();
   const noteContentInput = useRef<HTMLInputElement>(null);
-  // const noteTagInput = useRef<HTMLInputElement>(null);
   const [noteContent, setNoteContent] = React.useState("");
-  // const [noteTag, setNoteTag] = React.useState("");
+  const [canSubmit, setCanSubmit] = React.useState(false);
 
+  //Check if the submit button should be available
+  useEffect(() => {
+    setCanSubmit(noteContent !== "");
+  }, [noteContent]);
   //Focus on the input as soon as it gets rendered
   useEffect(() => {
     noteContentInput.current?.focus();
-    // console.log("focusing on:", noteContentInput, noteContentInput.current);
     console.log("focusing");
   }, [noteContentInput]);
 
@@ -64,30 +67,38 @@ export const FullInput: React.FC<iFullInputProps> = ({
     setNoteContent(event.target.value);
   };
 
-  // const handleTagChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   // setNoteTag(event.target.value);
-  // };
-
   const handleSubmition = () => {
-    console.log("full");
     addNote({
       content: noteContent,
     });
-    //Desactiva este componente luego de haber cumplido su proposito
     hideThisComponent();
+  };
+
+  const handleKeyPressed = (e: React.KeyboardEvent) => {
+    const keyIsEnter = e.code === "Enter";
+    const isCtrlPressed = e.nativeEvent.ctrlKey;
+    if (keyIsEnter && isCtrlPressed) {
+      handleSubmition();
+    }
   };
 
   return (
     <Paper square className={classes.container}>
-      <TextField
+      <InputBase
         placeholder="Take a note..."
+        multiline
         className={classes.textField}
         onBlur={handleLostOfFocus}
         onChange={handleContentChange}
         inputRef={noteContentInput}
         value={noteContent}
+        onKeyPress={handleKeyPressed}
       />
-      <Button className={classes.submitButton} onClick={handleSubmition}>
+      <Button
+        className={classes.submitButton}
+        onClick={handleSubmition}
+        disabled={!canSubmit}
+      >
         Save
       </Button>
     </Paper>

@@ -34,6 +34,11 @@ const InputField: React.FunctionComponent<InputFieldProps> = () => {
   };
   return (
     <div style={containerStyles}>
+      {/* <FullInput
+        isInputFocused={isInputFocused}
+        setIsInputFocused={handleChangeOfInput}
+        addNote={handleSubmition}
+      /> */}
       {isInputFocused ? (
         <FullInput
           isInputFocused={isInputFocused}

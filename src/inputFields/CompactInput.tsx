@@ -1,21 +1,16 @@
 import React from "react";
-import { Paper, TextField, makeStyles } from "@material-ui/core";
-import { blue } from "@material-ui/core/colors";
+import { Paper, makeStyles } from "@material-ui/core";
+import { InputBase } from "@material-ui/core";
 
 const useStyles = makeStyles({
   test: {
     backgroundColor: "#121212",
   },
   container: {
-    // background: blue[500],
     width: "100%",
     gridColumn: "5/9",
-    // display: "flex",
-    // justifyContent: "center",
-    // maxHeight: "100px",
-    height: "100px",
-    // padding: "8px 16px",
-    // gap: "24px",
+    height: "50px",
+    padding: "8px 16px",
   },
   input: {
     height: "100%",
@@ -40,7 +35,7 @@ export const CompactInput: React.FC<iInputProps> = ({
 
   return (
     <Paper square className={classes.container}>
-      <TextField
+      <InputBase
         className={classes.input}
         placeholder="Take a note..."
         onFocus={handleFocus}
