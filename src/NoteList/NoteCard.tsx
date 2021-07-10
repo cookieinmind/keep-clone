@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme: Theme) =>
       maxWidth: 345,
     },
     actionsContainer: {
-      justifyContent: "flex-end",
+      justifyContent: "flex-start",
     },
     noteTitle: {
       fontSize: "2rem",
@@ -52,53 +52,53 @@ const NoteCard: React.FunctionComponent<NoteCardProps> = ({
         // Title
         title={note.tag}
         titleTypographyProps={{
-          variant: "button",
+          variant: "subtitle1",
           component: "span",
           color: "textSecondary",
         }}
         // Date
-        subheader="September 14, 2016"
+        subheader={note.date ? "Last edited on " + note.date : "unkown"}
         subheaderTypographyProps={{ variant: "caption", component: "span" }}
-        // Date
+        // Add to favorites
         action={
-          <IconButton aria-label="add to favorites">
-            <StarIcon fontSize="small" />
+          <IconButton aria-label="delete" onClick={handleNoteDelete}>
+            <DeleteIcon fontSize="small" />
           </IconButton>
         }
       />
       {/* NoteContent */}
       <CardContent>
-        <Typography variant="h6" component="p">
+        <Typography variant="body1" component="p">
           {note.content}
         </Typography>
       </CardContent>
 
       {/* Actions */}
-      <CardActions className={classes.actionsContainer}>
-        {/* Reminder */}
-        {/* <IconButton aria-label="add reminder">
+      {/* <CardActions className={classes.actionsContainer}> */}
+      {/* Reminder */}
+      {/* <IconButton aria-label="add reminder">
           <AddAlertIcon fontSize="small" />
         </IconButton> */}
-        {/* Archive */}
-        {/* <IconButton aria-label="archive note">
+      {/* Archive */}
+      {/* <IconButton aria-label="archive note">
           <ArchiveIcon fontSize="small" />
         </IconButton> */}
 
-        {/* Image */}
-        {/* <IconButton aria-label="upload image">
+      {/* Image */}
+      {/* <IconButton aria-label="upload image">
           <ImageIcon fontSize="small" />
         </IconButton> */}
 
-        {/* Options */}
-        {/* <IconButton aria-label="more">
+      {/* Options */}
+      {/* <IconButton aria-label="more">
           <MoreVertIcon fontSize="small" />
         </IconButton> */}
 
-        {/* Delete */}
-        <IconButton aria-label="delete" onClick={handleNoteDelete}>
+      {/* Delete */}
+      {/* <IconButton aria-label="delete" onClick={handleNoteDelete}>
           <DeleteIcon fontSize="small" />
-        </IconButton>
-      </CardActions>
+        </IconButton> */}
+      {/* </CardActions> */}
     </Card>
   );
 };

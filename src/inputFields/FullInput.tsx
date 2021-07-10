@@ -68,8 +68,18 @@ export const FullInput: React.FC<iFullInputProps> = ({
   };
 
   const handleSubmition = () => {
+    const today = new Date();
+    const date =
+      today.getDate() +
+      "-" +
+      (today.getMonth() + 1) +
+      "-" +
+      today.getFullYear();
+    console.log(date);
+
     addNote({
       content: noteContent,
+      date,
     });
     hideThisComponent();
   };
