@@ -11,6 +11,7 @@ const useStyles = makeStyles({
     gridColumn: "5/9",
     height: "50px",
     padding: "8px 16px",
+    borderRadius: "5px",
   },
   input: {
     height: "100%",

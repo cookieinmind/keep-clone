@@ -4,17 +4,11 @@ import {
   Card,
   CardContent,
   CardHeader,
-  CardActions,
   IconButton,
   Typography,
 } from "@material-ui/core";
 // Icons
-import AddAlertIcon from "@material-ui/icons/AddAlert";
-import ArchiveIcon from "@material-ui/icons/Archive";
-import ImageIcon from "@material-ui/icons/Image";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
 import DeleteIcon from "@material-ui/icons/Delete";
-import StarIcon from "@material-ui/icons/Star";
 import { Note } from "../state/models/note";
 
 export interface NoteCardProps {
@@ -46,11 +40,16 @@ const NoteCard: React.FunctionComponent<NoteCardProps> = ({
     deteleteNote(note);
   };
 
+  const getTags = (): string | null => {
+    const output = note.tags !== undefined ? note.tags[0] : null;
+    return output;
+  };
+
   return (
     <Card className={classes.root}>
       <CardHeader
         // Title
-        title={note.tag}
+        title={getTags()}
         titleTypographyProps={{
           variant: "subtitle1",
           component: "span",

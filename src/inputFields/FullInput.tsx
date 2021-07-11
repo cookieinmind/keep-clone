@@ -1,9 +1,8 @@
 import React from "react";
-import { useEffect } from "react";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Note } from "../state/models/note";
-import { makeStyles, Paper, Button } from "@material-ui/core";
-import { InputBase } from "@material-ui/core";
+import { InputBase, Box, makeStyles, Paper, Button } from "@material-ui/core";
+import TagsContainer from "./TagsContainer";
 
 const useStyles = makeStyles({
   test: {
@@ -19,9 +18,7 @@ const useStyles = makeStyles({
     padding: "8px 16px",
     gap: "24px",
     gridColumn: "4/10",
-  },
-  submitButton: {
-    maxWidth: "100px",
+    borderRadius: "5px",
   },
   textField: {
     width: "100%",
@@ -30,6 +27,14 @@ const useStyles = makeStyles({
     "&::after": {
       content: "-",
     },
+  },
+  footer: {
+    width: "100%",
+    display: "flex",
+    justifyContent: "flex-end",
+  },
+  submitButton: {
+    flex: "0",
   },
 });
 
@@ -43,31 +48,75 @@ export const FullInput: React.FC<iFullInputProps> = ({
   setIsInputFocused,
   addNote,
 }) => {
+  //Fields
   const hideThisComponent = () => setIsInputFocused(false);
   const classes = useStyles();
-  const noteContentInput = useRef<HTMLInputElement>(null);
-  const [noteContent, setNoteContent] = React.useState("");
-  const [canSubmit, setCanSubmit] = React.useState(false);
+  const inputFieldElement = useRef<HTMLInputElement>(null);
+  const [noteContent, setNoteContent] = useState("");
+
+  const isCreatingTag = useRef<boolean>(false);
+  const tag = useRef<string>("");
+  const [noteTags, setNoteTags] = useState<string[]>([]);
+  const [canSubmit, setCanSubmit] = useState<boolean>(false);
 
   //Check if the submit button should be available
   useEffect(() => {
     setCanSubmit(noteContent !== "");
   }, [noteContent]);
+
   //Focus on the input as soon as it gets rendered
   useEffect(() => {
-    noteContentInput.current?.focus();
-    console.log("focusing");
-  }, [noteContentInput]);
+    inputFieldElement.current?.focus();
+  }, [inputFieldElement]);
 
+  //* Methods that change state
   const handleLostOfFocus = (event: React.FocusEvent<HTMLInputElement>) => {
-    if (event.relatedTarget === null) hideThisComponent();
+    const userClickedOutsideTheInput = event.relatedTarget === null;
+    if (userClickedOutsideTheInput) hideThisComponent();
   };
 
   const handleContentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNoteContent(event.target.value);
   };
 
-  const handleSubmition = () => {
+  const handleKeyPressed = (e: React.KeyboardEvent) => {
+    //Ignore the shift stroke
+    if (e.key === "Shift") return;
+
+    const pressedHashtag = e.key === "#";
+    const pressedSpace = e.key === " ";
+
+    if (pressedHashtag) {
+      isCreatingTag.current = true;
+    } else if (pressedSpace) isCreatingTag.current = false;
+
+    const thereIsATagToSubmit = tag.current !== "";
+
+    if (isCreatingTag.current) {
+      tag.current = updateTag(e.key, tag.current);
+    } else if (thereIsATagToSubmit) {
+      handleTagSubmition();
+    }
+
+    const keyIsEnter = e.code === "Enter";
+    const isCtrlPressed = e.nativeEvent.ctrlKey;
+    if (keyIsEnter && isCtrlPressed) {
+      handleNoteSubmition();
+    }
+  };
+
+  const handleTagSubmition = () => {
+    setNoteTags([...noteTags, tag.current]);
+    const cleanContent = cleanTagOfContent(tag.current, noteContent);
+    setNoteContent(cleanContent);
+    tag.current = "";
+    console.log("finished handle of tag", noteTags, tag.current);
+  };
+
+  const handleNoteSubmition = () => {
+    const thereIsATagToSubmit = tag.current !== "";
+    if (thereIsATagToSubmit) handleTagSubmition();
+
     const today = new Date();
     const date =
       today.getDate() +
@@ -75,21 +124,45 @@ export const FullInput: React.FC<iFullInputProps> = ({
       (today.getMonth() + 1) +
       "-" +
       today.getFullYear();
-    console.log(date);
 
-    addNote({
+    console.log(noteContent, date, noteTags);
+    const note = {
       content: noteContent,
       date,
-    });
+      tags: noteTags,
+    };
+
+    console.log("finished handle of note", noteTags);
+
+    addNote(note);
     hideThisComponent();
   };
 
-  const handleKeyPressed = (e: React.KeyboardEvent) => {
-    const keyIsEnter = e.code === "Enter";
-    const isCtrlPressed = e.nativeEvent.ctrlKey;
-    if (keyIsEnter && isCtrlPressed) {
-      handleSubmition();
+  //*Tags helper methods
+  const updateTag = (newTerm: string, oldTag: string): string => {
+    let newTag = oldTag;
+    if (newTerm === "Backspace") {
+      const deleted = oldTag.slice(0, oldTag.length - 1);
+      newTag = deleted;
+    } else {
+      newTag += newTerm;
     }
+
+    return newTag;
+  };
+
+  const cleanTagOfContent = (tag: string, content: string): string => {
+    let output: undefined | string = "";
+
+    output = content.replace(tag, "");
+
+    return output.trim() + " ";
+  };
+
+  //*Methods to pass to children
+  const handleTagDeletion = (tag: string) => {
+    const newTags = noteTags.filter((t) => t !== tag);
+    setNoteTags(newTags);
   };
 
   return (
@@ -100,17 +173,23 @@ export const FullInput: React.FC<iFullInputProps> = ({
         className={classes.textField}
         onBlur={handleLostOfFocus}
         onChange={handleContentChange}
-        inputRef={noteContentInput}
+        inputRef={inputFieldElement}
         value={noteContent}
-        onKeyPress={handleKeyPressed}
+        // Using onKeyUp so the backspace can be logged
+        onKeyUp={handleKeyPressed}
       />
-      <Button
-        className={classes.submitButton}
-        onClick={handleSubmition}
-        disabled={!canSubmit}
-      >
-        Save
-      </Button>
+      <Box className={classes.footer}>
+        {noteTags?.length > 0 && (
+          <TagsContainer tags={noteTags} onDeletion={handleTagDeletion} />
+        )}
+        <Button
+          className={classes.submitButton}
+          onClick={handleNoteSubmition}
+          disabled={!canSubmit}
+        >
+          Save
+        </Button>
+      </Box>
     </Paper>
   );
 };
