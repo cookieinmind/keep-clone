@@ -9,8 +9,9 @@ export interface TagsContainerProps {
 
 const useStyles = makeStyles({
   tagsContainer: {
-    flex: "1 0 auto",
+    flex: "1 1 auto",
     display: "flex",
+    flexWrap: "wrap",
     gap: "1rem",
   },
 });
