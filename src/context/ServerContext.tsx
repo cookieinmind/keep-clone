@@ -56,19 +56,24 @@ const ServerContextProvider: React.FunctionComponent<ContextProps> = ({
     qryClient.invalidateQueries("notes");
   };
 
+  const resetTagQueries = () => {
+    qryClient.invalidateQueries("tags");
+  };
+
   const createNote = async (note: Note) => {
     await submitNoteAsyncMutation(note);
     resetNoteQueries();
 
     const newTags = note.tags?.filter((tag) => {
       console.log(tagsOnServer, tag);
-      return tagsOnServer?.includes(tag) === false;
+
+      //compare names so it ignores the id
+      return tagsOnServer?.some((t) => t.name === tag.name) === false;
     });
 
     if (newTags && newTags.length > 0) {
-      //add new tags to the list
       await addTagAsyncMutation(newTags);
-      qryClient.invalidateQueries("tags");
+      resetTagQueries();
     }
   };
 

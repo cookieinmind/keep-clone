@@ -1,17 +1,6 @@
 {
   "notes": [
     {
-      "content": " make is possible to edit notes",
-      "date": "12-7-2021",
-      "tags": [
-        {
-          "id": 1,
-          "name": "todo"
-        }
-      ],
-      "id": 6
-    },
-    {
       "content": "make \"deleted\" and \"archived\" folders ",
       "date": "12-7-2021",
       "tags": [
@@ -34,17 +23,6 @@
       "id": 10
     },
     {
-      "content": "find more info on json-server to find out how to get the tags ",
-      "date": "12-7-2021",
-      "tags": [
-        {
-          "id": 1,
-          "name": "todo"
-        }
-      ],
-      "id": 11
-    },
-    {
       "content": "Si dejas presionada una letra, no las reconoce el tag ",
       "date": "12-7-2021",
       "tags": [
@@ -56,44 +34,108 @@
       "id": 12
     },
     {
-      "content": "Create a way to edit tags (delete, rename, etc)",
+      "content": "a way to reorder cards ",
       "date": "14-7-2021",
       "tags": [
+        {
+          "name": "ui"
+        },
         {
           "name": "todo"
         }
       ],
-      "id": 13
+      "id": 19
     },
     {
       "content": "Improve the way tags look on the cards ",
       "date": "14-7-2021",
       "tags": [
         {
-          "name": "todo"
-        }
-      ],
-      "id": 14
-    },
-    {
-      "content": " duplicate tags because of ID when comparing",
-      "date": "14-7-2021",
-      "tags": [
-        {
-          "name": "bug"
-        }
-      ],
-      "id": 16
-    },
-    {
-      "content": " a way to reorder cards",
-      "date": "14-7-2021",
-      "tags": [
+          "name": "ui"
+        },
         {
           "name": "todo"
         }
       ],
-      "id": 17
+      "id": 20
+    },
+    {
+      "content": "Create a way to edit tags (delete, rename, etc) ",
+      "date": "14-7-2021",
+      "tags": [
+        {
+          "name": "functionality"
+        },
+        {
+          "name": "todo"
+        }
+      ],
+      "id": 21
+    },
+    {
+      "content": "make \"deleted\" and \"archived\" folders ",
+      "date": "14-7-2021",
+      "tags": [
+        {
+          "name": "functionality"
+        },
+        {
+          "name": "todo"
+        }
+      ],
+      "id": 22
+    },
+    {
+      "content": "make the input be responsive ",
+      "date": "14-7-2021",
+      "tags": [
+        {
+          "name": "responsive"
+        },
+        {
+          "name": "todo"
+        }
+      ],
+      "id": 23
+    },
+    {
+      "content": "make is possible to edit notes ",
+      "date": "14-7-2021",
+      "tags": [
+        {
+          "name": "functionality"
+        },
+        {
+          "name": "todo"
+        }
+      ],
+      "id": 24
+    },
+    {
+      "content": "Make it clear when the user is inside a tag.\nMaybe give it a title or header...",
+      "date": "14-7-2021",
+      "tags": [
+        {
+          "name": "ui"
+        },
+        {
+          "name": "todo"
+        }
+      ],
+      "id": 25
+    },
+    {
+      "content": " Improve the way the \"last edited\" looks",
+      "date": "14-7-2021",
+      "tags": [
+        {
+          "name": "ui"
+        },
+        {
+          "name": "todo"
+        }
+      ],
+      "id": 26
     }
   ],
   "tags": [
@@ -106,12 +148,16 @@
       "name": "bug"
     },
     {
-      "name": "bug",
+      "name": "responsive",
       "id": 3
     },
     {
-      "name": "todo",
+      "name": "ui",
       "id": 4
+    },
+    {
+      "name": "functionality",
+      "id": 5
     }
   ]
 }
