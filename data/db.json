@@ -3,49 +3,37 @@
     {
       "content": " make is possible to edit notes",
       "date": "12-7-2021",
-      "tags": [
-        "#todo"
-      ],
+      "tags": ["#todo"],
       "id": 6
     },
     {
       "content": "put the tags on the side bar ",
       "date": "12-7-2021",
-      "tags": [
-        "#todo"
-      ],
+      "tags": ["#todo"],
       "id": 7
     },
     {
       "content": "make \"deleted\" and \"archived\" folders ",
       "date": "12-7-2021",
-      "tags": [
-        "#todo"
-      ],
+      "tags": ["#todo"],
       "id": 8
     },
     {
       "content": " borrar tags al comienzo del array parece traer problemas",
       "date": "12-7-2021",
-      "tags": [
-        "#bug"
-      ],
+      "tags": ["#bug"],
       "id": 10
     },
     {
       "content": "find more info on json-server to find out how to get the tags ",
       "date": "12-7-2021",
-      "tags": [
-        "#todo"
-      ],
+      "tags": ["#todo"],
       "id": 11
     },
     {
       "content": "Si dejas presionada una letra, no las reconoce el tag ",
       "date": "12-7-2021",
-      "tags": [
-        "#bug"
-      ],
+      "tags": ["#bug"],
       "id": 12
     }
   ],

@@ -17,7 +17,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
-import { useTagContext } from "../context/TagContextProvider";
+import { useServerContext } from "../context/ServerContext";
 import { Tag } from "../models/tag";
 
 const drawerWidth = 240;
@@ -96,7 +96,7 @@ const Layout: React.FunctionComponent<LayoutProps> = ({ children }) => {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const tagContext = useTagContext();
+  const tagContext = useServerContext();
 
   const handleDrawerOpen = () => {
     setOpen(true);

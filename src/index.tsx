@@ -7,7 +7,7 @@ import { store } from "./state/store";
 import { BrowserRouter as Router } from "react-router-dom";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { QueryClient, QueryClientProvider } from "react-query";
-import TagContextProvider from "./context/TagContextProvider";
+import ServerContextProvider from "./context/ServerContext";
 
 const queryClient = new QueryClient();
 
@@ -15,13 +15,13 @@ ReactDOM.render(
   <React.StrictMode>
     <CssBaseline />
     <QueryClientProvider client={queryClient}>
-      <TagContextProvider>
+      <ServerContextProvider>
         <Router>
           <Provider store={store}>
             <App></App>
           </Provider>
         </Router>
-      </TagContextProvider>
+      </ServerContextProvider>
     </QueryClientProvider>
   </React.StrictMode>,
   document.getElementById("root")

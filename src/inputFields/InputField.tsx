@@ -3,9 +3,7 @@ import { useState } from "react";
 import { CompactInput } from "./CompactInput";
 import { FullInput } from "./FullInput";
 import { Note } from "../models/note";
-import { useMutation, useQueryClient } from "react-query";
-import { AddNote } from "../api/notesAPI";
-import { useTagContext } from "../context/TagContextProvider";
+import { useServerContext } from "../context/ServerContext";
 
 export interface InputFieldProps {}
 
@@ -13,11 +11,7 @@ const InputField: React.FunctionComponent<InputFieldProps> = () => {
   //Variables
   const [isInputFocused, setIsInputFocused] = useState(false);
 
-  const { mutateAsync: submitNoteAsyncMutation } = useMutation(AddNote);
-
-  const qryClient = useQueryClient();
-
-  const tagContext = useTagContext();
+  const tagContext = useServerContext();
 
   // Functions
   const handleChangeOfInput = (val: boolean) => {
@@ -25,10 +19,7 @@ const InputField: React.FunctionComponent<InputFieldProps> = () => {
   };
 
   const handleSubmition = async (note: Note) => {
-    await submitNoteAsyncMutation(note);
-
-    tagContext?.noteWasCreated(note);
-    qryClient.invalidateQueries("notes");
+    tagContext?.createNote(note);
   };
 
   //Styles

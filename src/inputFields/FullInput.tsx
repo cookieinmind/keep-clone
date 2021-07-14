@@ -57,7 +57,7 @@ export const FullInput: React.FC<iFullInputProps> = ({
 
   const isCreatingTag = useRef<boolean>(false);
   const tag = useRef<string>("");
-  const [noteTags, setNoteTags] = useState<string[]>([]);
+  const [nameOfTags, setNameOfTags] = useState<string[]>([]);
   const [canSubmit, setCanSubmit] = useState<boolean>(false);
 
   //Check if the submit button should be available
@@ -107,18 +107,10 @@ export const FullInput: React.FC<iFullInputProps> = ({
   };
 
   const handleTagSubmition = () => {
-    setNoteTags([...noteTags, tag.current]);
+    setNameOfTags([...nameOfTags, tag.current]);
     const cleanContent = cleanTagOfContent(tag.current, noteContent);
     setNoteContent(cleanContent);
     tag.current = "";
-  };
-
-  const convertStringToTag = (strings: string[]): Tag[] => {
-    return strings.map((s) => {
-      return {
-        name: s,
-      };
-    });
   };
 
   const handleNoteSubmition = () => {
@@ -136,10 +128,9 @@ export const FullInput: React.FC<iFullInputProps> = ({
     const note = {
       content: noteContent,
       date,
-      tags: convertStringToTag(noteTags),
+      tags: convertStringToTag(nameOfTags),
     };
 
-    console.log("Passing this note:", note);
     addNote(note);
     hideThisComponent();
   };
@@ -165,10 +156,18 @@ export const FullInput: React.FC<iFullInputProps> = ({
     return output.trim() + " ";
   };
 
+  const convertStringToTag = (names: string[]): Tag[] => {
+    return names.map((name) => {
+      return {
+        name,
+      };
+    });
+  };
+
   //*Methods to pass to children
   const handleTagDeletion = (tag: string) => {
-    const newTags = noteTags.filter((t) => t !== tag);
-    setNoteTags(newTags);
+    const newTags = nameOfTags.filter((t) => t !== tag);
+    setNameOfTags(newTags);
   };
 
   return (
@@ -185,8 +184,8 @@ export const FullInput: React.FC<iFullInputProps> = ({
         onKeyUp={handleKeyPressed}
       />
       <Box className={classes.footer}>
-        {noteTags?.length > 0 && (
-          <TagsContainer tags={noteTags} onDeletion={handleTagDeletion} />
+        {nameOfTags?.length > 0 && (
+          <TagsContainer tags={nameOfTags} onDeletion={handleTagDeletion} />
         )}
         <Button
           className={classes.submitButton}

@@ -34,9 +34,9 @@ export const AddTags = async (tags: Tag[]) => {
       })
     );
 
-    console.log("responses:", responses);
     return await responses;
   } catch (err) {
-    console.log("api err:", err);
+    console.log("tag api err:", err);
+    throw err;
   }
 };
