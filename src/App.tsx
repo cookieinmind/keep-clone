@@ -1,5 +1,5 @@
 import React from "react";
-import Layout from "./shared/Layout";
+import Layout from "./layout/Layout";
 import InputField from "./inputFields/InputField";
 import { Container, makeStyles } from "@material-ui/core";
 import NoteList from "./NoteList/NoteList";

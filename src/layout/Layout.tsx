@@ -19,6 +19,7 @@ import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
 import { useServerContext } from "../context/ServerContext";
 import { Tag } from "../models/tag";
+import LabelIcon from "@material-ui/icons/Label";
 
 const drawerWidth = 240;
 
@@ -93,6 +94,7 @@ export interface LayoutProps {
 }
 
 const Layout: React.FunctionComponent<LayoutProps> = ({ children }) => {
+  //UI stuff
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -105,6 +107,9 @@ const Layout: React.FunctionComponent<LayoutProps> = ({ children }) => {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  //Server stuff
+  const { tags } = useServerContext();
 
   //!Return
   return (
@@ -161,41 +166,21 @@ const Layout: React.FunctionComponent<LayoutProps> = ({ children }) => {
         <Divider />
 
         <List>
-          {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
-
-        <Divider />
-
-        <List>
-          {["All mail", "Trash", "Spam"].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
+          {tags &&
+            tags.map((tag, index) => (
+              <ListItem button key={tag.name}>
+                <ListItemIcon>
+                  <LabelIcon />
+                </ListItemIcon>
+                <ListItemText primary={tag.name} />
+              </ListItem>
+            ))}
         </List>
       </Drawer>
 
       {/* Main */}
       <main className={classes.content}>
         <div className={classes.toolbar} />
-
-        {tagContext !== null &&
-          tagContext.tags?.map((t: Tag) => {
-            return <p key={t.name + t.id}>{t.name}</p>;
-          })}
-
-        <br />
-        <br />
         {children}
       </main>
     </div>
