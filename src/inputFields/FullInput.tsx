@@ -1,8 +1,9 @@
 import React from "react";
 import { useRef, useState, useEffect } from "react";
-import { Note } from "../state/models/note";
+import { Note } from "../models/note";
 import { InputBase, Box, makeStyles, Paper, Button } from "@material-ui/core";
 import TagsContainer from "./TagsContainer";
+import { Tag } from "../models/tag";
 
 const useStyles = makeStyles({
   test: {
@@ -110,7 +111,14 @@ export const FullInput: React.FC<iFullInputProps> = ({
     const cleanContent = cleanTagOfContent(tag.current, noteContent);
     setNoteContent(cleanContent);
     tag.current = "";
-    console.log("finished handle of tag", noteTags, tag.current);
+  };
+
+  const convertStringToTag = (strings: string[]): Tag[] => {
+    return strings.map((s) => {
+      return {
+        name: s,
+      };
+    });
   };
 
   const handleNoteSubmition = () => {
@@ -125,15 +133,13 @@ export const FullInput: React.FC<iFullInputProps> = ({
       "-" +
       today.getFullYear();
 
-    console.log(noteContent, date, noteTags);
     const note = {
       content: noteContent,
       date,
-      tags: noteTags,
+      tags: convertStringToTag(noteTags),
     };
 
-    console.log("finished handle of note", noteTags);
-
+    console.log("Passing this note:", note);
     addNote(note);
     hideThisComponent();
   };

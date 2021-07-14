@@ -1,5 +1,5 @@
 import { Action } from "../actions/actions";
-import { Note } from "../models/note";
+import { Note } from "../../models/note";
 
 export interface NotesState {
   notes: Note[];

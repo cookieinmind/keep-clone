@@ -4,8 +4,8 @@ import InputField from "./inputFields/InputField";
 import { Container, makeStyles } from "@material-ui/core";
 import NoteList from "./NoteList/NoteList";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { DeleteNote, GetNotes } from "./API";
-import { Note } from "./state/models/note";
+import { DeleteNote, GetNotes } from "./api/notesAPI";
+import { Note } from "./models/note";
 
 const useStyles = makeStyles({
   container: {

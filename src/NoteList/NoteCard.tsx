@@ -9,7 +9,7 @@ import {
 } from "@material-ui/core";
 // Icons
 import DeleteIcon from "@material-ui/icons/Delete";
-import { Note } from "../state/models/note";
+import { Note } from "../models/note";
 
 export interface NoteCardProps {
   note: Note;
@@ -42,7 +42,7 @@ const NoteCard: React.FunctionComponent<NoteCardProps> = ({
 
   const getTags = (): string | null => {
     const output = note.tags !== undefined ? note.tags[0] : null;
-    return output;
+    return output ? output.name : "unkown";
   };
 
   return (

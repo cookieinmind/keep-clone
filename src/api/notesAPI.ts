@@ -1,4 +1,4 @@
-import { Note } from "./state/models/note";
+import { Note } from "../models/note";
 
 const BASE_URL = "http://localhost:8000/notes";
 
@@ -21,9 +21,6 @@ export const DeleteNote = async (note: Note) => {
 };
 
 export const AddNote = async (note: Note): Promise<Note> => {
-  // if (note.tags !== undefined && note.tags?.length > 0)
-  //   note.tags = ["uncategorized"];
-
   const body = {
     method: "POST",
     headers: { "Content-Type": "application/json" },

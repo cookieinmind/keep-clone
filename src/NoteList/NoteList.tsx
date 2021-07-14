@@ -1,5 +1,5 @@
 import Masonry from "react-masonry-css";
-import { Note } from "../state/models/note";
+import { Note } from "../models/note";
 import NoteCard from "./NoteCard";
 
 export interface NoteListProps {
