@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core";
+import { makeStyles, Button } from "@material-ui/core";
 import React from "react";
 import clsx from "clsx";
 import { createStyles, useTheme, Theme } from "@material-ui/core/styles";
@@ -15,11 +15,9 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
 import { useServerContext } from "../context/ServerContext";
-import { Tag } from "../models/tag";
 import LabelIcon from "@material-ui/icons/Label";
+import { Link } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -36,6 +34,15 @@ const useStyles = makeStyles((theme: Theme) =>
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
       }),
+    },
+    homeButton: {
+      textDecoration: "none",
+      color: "#fff",
+    },
+    sidebarLink: {
+      textDecoration: "none",
+      color: "#121212",
+      textTransform: "capitalize",
     },
     appBarShift: {
       marginLeft: drawerWidth,
@@ -98,7 +105,6 @@ const Layout: React.FunctionComponent<LayoutProps> = ({ children }) => {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const tagContext = useServerContext();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -133,9 +139,11 @@ const Layout: React.FunctionComponent<LayoutProps> = ({ children }) => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
-            Google Keep Clone
-          </Typography>
+          <Link to="/" className={classes.homeButton}>
+            <Typography variant="h6" noWrap>
+              Google Keep Clone
+            </Typography>
+          </Link>
         </Toolbar>
       </AppBar>
 
@@ -167,13 +175,19 @@ const Layout: React.FunctionComponent<LayoutProps> = ({ children }) => {
 
         <List>
           {tags &&
-            tags.map((tag, index) => (
-              <ListItem button key={tag.name}>
-                <ListItemIcon>
-                  <LabelIcon />
-                </ListItemIcon>
-                <ListItemText primary={tag.name} />
-              </ListItem>
+            tags.map((tag) => (
+              <Link
+                key={tag.name}
+                to={"/" + tag.name}
+                className={classes.sidebarLink}
+              >
+                <ListItem button>
+                  <ListItemIcon>
+                    <LabelIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={tag.name} />
+                </ListItem>
+              </Link>
             ))}
         </List>
       </Drawer>

@@ -41,8 +41,8 @@ const ServerContextProvider: React.FunctionComponent<ContextProps> = ({
   const qryClient = useQueryClient();
 
   //* Queries
-  const { data: notes } = useQuery<Note[], Error>("notes", GetNotes);
-  const { data: tags } = useQuery<Tag[], Error>("tags", GetTags);
+  const { data: notesOnServer } = useQuery<Note[], Error>("notes", GetNotes);
+  const { data: tagsOnServer } = useQuery<Tag[], Error>("tags", GetTags);
 
   //*Mutations
   const { mutateAsync: submitNoteAsyncMutation } = useMutation(AddNote);
@@ -61,7 +61,8 @@ const ServerContextProvider: React.FunctionComponent<ContextProps> = ({
     resetNoteQueries();
 
     const newTags = note.tags?.filter((tag) => {
-      return tags?.includes(tag) === false;
+      console.log(tagsOnServer, tag);
+      return tagsOnServer?.includes(tag) === false;
     });
 
     if (newTags && newTags.length > 0) {
@@ -78,8 +79,8 @@ const ServerContextProvider: React.FunctionComponent<ContextProps> = ({
 
   //?Things this exposes to everyone else
   const contextValue: ServerContext = {
-    notes: notes ? notes : [],
-    tags: tags ? tags : [],
+    notes: notesOnServer ? notesOnServer : [],
+    tags: tagsOnServer ? tagsOnServer : [],
     createNote,
     deleteNote,
   };

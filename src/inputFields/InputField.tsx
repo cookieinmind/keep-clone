@@ -42,7 +42,6 @@ const InputField: React.FunctionComponent<InputFieldProps> = () => {
       tags: cleanTags,
     };
 
-    console.log(cleanTags);
     return cleanNote;
   };
 
