@@ -4,6 +4,7 @@ import { CompactInput } from "./CompactInput";
 import { FullInput } from "./FullInput";
 import { Note } from "../models/note";
 import { useServerContext } from "../context/ServerContext";
+import { Tag } from "../models/tag";
 
 export interface InputFieldProps {}
 
@@ -19,7 +20,30 @@ const InputField: React.FunctionComponent<InputFieldProps> = () => {
   };
 
   const handleSubmition = async (note: Note) => {
-    tagContext?.createNote(note);
+    const cleanNote = cleanTags(note);
+    tagContext?.createNote(cleanNote);
+  };
+
+  const cleanTags = (note: Note): Note => {
+    if (!note.tags || note.tags.length < 1) return note;
+
+    const cleanTags: Tag[] = [];
+
+    for (const dirtyTag of note.tags) {
+      const cleanTag: Tag = {
+        name: dirtyTag.name.replace("#", ""),
+      };
+      cleanTags.push(cleanTag);
+    }
+
+    const cleanNote: Note = {
+      content: note.content,
+      date: note.date,
+      tags: cleanTags,
+    };
+
+    console.log(cleanTags);
+    return cleanNote;
   };
 
   //Styles
