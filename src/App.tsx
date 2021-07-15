@@ -15,7 +15,7 @@ const useStyles = makeStyles({
 function App() {
   const styles = useStyles();
 
-  const { notes, deleteNote } = useServerContext();
+  const { notes, deleteNote, archiveNote } = useServerContext();
 
   return (
     <Container className={styles.container}>
@@ -24,7 +24,11 @@ function App() {
         <Switch>
           {notes !== undefined && notes?.length > 0 && (
             <Route path="/:tag?" strict={false}>
-              <NoteList notes={notes} deteleteNote={deleteNote} />
+              <NoteList
+                notes={notes}
+                deteleteNote={deleteNote}
+                archiveNote={archiveNote}
+              />
             </Route>
           )}
         </Switch>

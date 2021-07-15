@@ -1,25 +1,53 @@
-import React from "react";
+import React, { useRef, useState } from "react";
+import TagCarousel from "./TagsCarousel";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import {
+  Box,
   Card,
   CardContent,
   CardHeader,
   IconButton,
+  Paper,
   Typography,
 } from "@material-ui/core";
 // Icons
 import DeleteIcon from "@material-ui/icons/Delete";
+import BookmarkIcon from "@material-ui/icons/Bookmark";
 import { Note } from "../models/note";
+import ButtonsCarousel from "./ButtonsCarousel";
 
 export interface NoteCardProps {
   note: Note;
   deteleteNote: (note: Note) => void;
+  archiveNote: (note: Note) => void;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      maxWidth: 345,
+      cursor: "pointer",
+      width: "15rem",
+      padding: "2rem 1rem",
+      display: "flex",
+      flexDirection: "column",
+      gap: "1rem",
+    },
+    headerContainer: {
+      width: "100%",
+      display: "flex",
+      gap: "1rem",
+      alignItems: "flex-start",
+    },
+    title: {
+      flex: "1 1 auto",
+      fontSize: "1rem",
+    },
+    headerButton: {
+      padding: 0,
+    },
+    headerButtonHide: {
+      padding: 0,
+      visibility: "hidden",
     },
     actionsContainer: {
       justifyContent: "flex-start",
@@ -33,11 +61,17 @@ const useStyles = makeStyles((theme: Theme) =>
 const NoteCard: React.FunctionComponent<NoteCardProps> = ({
   note,
   deteleteNote,
+  archiveNote,
 }) => {
-  const classes = useStyles();
+  const c = useStyles();
+  const [hover, setHover] = useState<boolean>(false);
 
-  const handleNoteDelete = () => {
+  const handleDeleteNote = () => {
     deteleteNote(note);
+  };
+
+  const handleArchiveNote = () => {
+    archiveNote(note);
   };
 
   const getTags = (): string | null => {
@@ -45,60 +79,47 @@ const NoteCard: React.FunctionComponent<NoteCardProps> = ({
     return output ? output.name : "unkown";
   };
 
+  const mouseIfOverNote = () => {
+    setHover(true);
+  };
+
+  const mouseLeavesNote = () => {
+    setHover(false);
+  };
+
   return (
-    <Card className={classes.root}>
-      <CardHeader
-        // Title
-        title={getTags()}
-        titleTypographyProps={{
-          variant: "subtitle1",
-          component: "span",
-          color: "textSecondary",
-        }}
-        // Date
-        subheader={note.date ? "Last edited on " + note.date : "unkown"}
-        subheaderTypographyProps={{ variant: "caption", component: "span" }}
-        // Add to favorites
-        action={
-          <IconButton aria-label="delete" onClick={handleNoteDelete}>
-            <DeleteIcon fontSize="small" />
-          </IconButton>
-        }
-      />
-      {/* NoteContent */}
-      <CardContent>
-        <Typography variant="body1" component="p">
+    <Paper
+      className={c.root}
+      onMouseEnter={mouseIfOverNote}
+      onMouseLeave={mouseLeavesNote}
+    >
+      {/* Header Container: Title + Special Icon container */}
+      <Box className={c.headerContainer}>
+        {/* Title of the note */}
+        <Typography className={c.title}>
+          {/* <Box fontWeight="fontWeightMedium"></Box> */}
           {note.content}
         </Typography>
-      </CardContent>
 
-      {/* Actions */}
-      {/* <CardActions className={classes.actionsContainer}> */}
-      {/* Reminder */}
-      {/* <IconButton aria-label="add reminder">
-          <AddAlertIcon fontSize="small" />
-        </IconButton> */}
-      {/* Archive */}
-      {/* <IconButton aria-label="archive note">
-          <ArchiveIcon fontSize="small" />
-        </IconButton> */}
+        {/* The special icon */}
+        <IconButton className={hover ? c.headerButton : c.headerButtonHide}>
+          <BookmarkIcon />
+        </IconButton>
+      </Box>
 
-      {/* Image */}
-      {/* <IconButton aria-label="upload image">
-          <ImageIcon fontSize="small" />
-        </IconButton> */}
+      {/* Content */}
+      {/* To do */}
 
-      {/* Options */}
-      {/* <IconButton aria-label="more">
-          <MoreVertIcon fontSize="small" />
-        </IconButton> */}
+      {/* Tags */}
+      {note.tags && <TagCarousel tags={note.tags} />}
 
-      {/* Delete */}
-      {/* <IconButton aria-label="delete" onClick={handleNoteDelete}>
-          <DeleteIcon fontSize="small" />
-        </IconButton> */}
-      {/* </CardActions> */}
-    </Card>
+      {/* Buttons */}
+      <ButtonsCarousel
+        visible={hover}
+        deleteNote={handleDeleteNote}
+        archiveNote={handleArchiveNote}
+      />
+    </Paper>
   );
 };
 

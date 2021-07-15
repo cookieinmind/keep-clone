@@ -136,6 +136,81 @@
         }
       ],
       "id": 26
+    },
+    {
+      "content": "add a search bar",
+      "date": "14-7-2021",
+      "tags": [
+        {
+          "name": "functionality"
+        },
+        {
+          "name": "todo"
+        }
+      ],
+      "id": 27
+    },
+    {
+      "content": "add tag suggestions ",
+      "date": "14-7-2021",
+      "tags": [
+        {
+          "name": "functionality"
+        },
+        {
+          "name": "todo"
+        }
+      ],
+      "id": 28
+    },
+    {
+      "content": "make it so if the user creates a note inside a tag folder, the tag is automatically given to it ",
+      "date": "14-7-2021",
+      "tags": [
+        {
+          "name": "functionality"
+        },
+        {
+          "name": "todo"
+        }
+      ],
+      "id": 29
+    },
+    {
+      "content": " Colors to notes and tags",
+      "date": "14-7-2021",
+      "tags": [
+        {
+          "name": "ui"
+        },
+        {
+          "name": "todo"
+        }
+      ],
+      "id": 30
+    },
+    {
+      "content": "add snackbar ",
+      "date": "15-7-2021",
+      "tags": [
+        {
+          "name": "functionality"
+        },
+        {
+          "name": "todo"
+        }
+      ],
+      "id": 31
+    },
+    {
+      "content": " Responsive bug?",
+      "date": "15-7-2021",
+      "tags": [
+        {
+          "name": "bug"
+        }
+      ],
+      "id": 32
     }
   ],
   "tags": [

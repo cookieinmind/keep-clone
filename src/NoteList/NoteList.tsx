@@ -6,6 +6,7 @@ import NoteCard from "./NoteCard";
 export interface NoteListProps {
   notes: Note[];
   deteleteNote: (note: Note) => void;
+  archiveNote: (note: Note) => void;
 }
 
 const breakpoints = {
@@ -18,6 +19,7 @@ const breakpoints = {
 const NoteList: React.FunctionComponent<NoteListProps> = ({
   notes,
   deteleteNote,
+  archiveNote,
 }) => {
   let { tag: tagName } = useParams<{ tag: string }>();
 
@@ -37,7 +39,11 @@ const NoteList: React.FunctionComponent<NoteListProps> = ({
     >
       {notesToShow.map((note) => (
         <div key={note.id}>
-          <NoteCard note={note} deteleteNote={deteleteNote} />
+          <NoteCard
+            note={note}
+            deteleteNote={deteleteNote}
+            archiveNote={archiveNote}
+          />
         </div>
       ))}
     </Masonry>

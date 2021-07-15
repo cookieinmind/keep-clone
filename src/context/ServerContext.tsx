@@ -13,6 +13,7 @@ const mockContext = {
   notes: [],
   createNote: () => console.log("loading context"),
   deleteNote: () => console.log("loading context"),
+  archiveNote: () => console.log("loading context"),
 };
 
 const ServerCtx = createContext<ServerContext>(mockContext);
@@ -22,6 +23,7 @@ interface ServerContext {
   notes: Note[];
   createNote: (note: Note) => void;
   deleteNote: (note: Note) => void;
+  archiveNote: (note: Note) => void;
 }
 
 interface ContextProps {
@@ -82,12 +84,17 @@ const ServerContextProvider: React.FunctionComponent<ContextProps> = ({
     resetNoteQueries();
   };
 
+  const archiveNote = async (note: Note) => {
+    console.log("server context", "to implement archive");
+  };
+
   //?Things this exposes to everyone else
   const contextValue: ServerContext = {
     notes: notesOnServer ? notesOnServer : [],
     tags: tagsOnServer ? tagsOnServer : [],
     createNote,
     deleteNote,
+    archiveNote,
   };
 
   return (
