@@ -5,4 +5,11 @@ export type Note = {
   content: string;
   tags?: Tag[];
   date?: string;
+  status: NoteStatus;
 };
+
+export enum NoteStatus {
+  alive = "alive",
+  deleted = "deleted",
+  archived = "archived",
+}

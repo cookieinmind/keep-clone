@@ -37,8 +37,9 @@ const InputField: React.FunctionComponent<InputFieldProps> = () => {
     }
 
     const cleanNote: Note = {
-      content: note.content,
-      date: note.date,
+      // content: note.content,
+      // date: note.date,k
+      ...note,
       tags: cleanTags,
     };
 

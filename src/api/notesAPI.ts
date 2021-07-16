@@ -30,3 +30,19 @@ export const AddNote = async (note: Note): Promise<Note> => {
 
   return response.json();
 };
+
+export const UpdateNote = async (note: Note) => {
+  const body = {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(note),
+  };
+
+  const url = BASE_URL + "/" + note.id;
+
+  console.log(url);
+
+  const response = await fetch(url, body);
+
+  return response.json();
+};

@@ -1,6 +1,6 @@
 import React from "react";
 import { useRef, useState, useEffect } from "react";
-import { Note } from "../models/note";
+import { Note, NoteStatus } from "../models/note";
 import { InputBase, Box, makeStyles, Paper, Button } from "@material-ui/core";
 import TagsContainer from "./TagsContainer";
 import { Tag } from "../models/tag";
@@ -129,6 +129,7 @@ export const FullInput: React.FC<iFullInputProps> = ({
       content: noteContent,
       date,
       tags: convertStringToTag(nameOfTags),
+      status: NoteStatus.alive,
     };
 
     addNote(note);

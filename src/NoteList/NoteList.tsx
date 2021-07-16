@@ -1,6 +1,6 @@
 import Masonry from "react-masonry-css";
 import { useParams } from "react-router-dom";
-import { Note } from "../models/note";
+import { Note, NoteStatus } from "../models/note";
 import NoteCard from "./NoteCard";
 
 export interface NoteListProps {
@@ -21,15 +21,42 @@ const NoteList: React.FunctionComponent<NoteListProps> = ({
   deteleteNote,
   archiveNote,
 }) => {
-  let { tag: tagName } = useParams<{ tag: string }>();
+  let { tag: tagName, status: statusName } = useParams<{
+    tag: string | undefined;
+    status: string | undefined;
+  }>();
 
-  const notesToShow = notes?.filter((note) => {
+  const filterByTag = (note: Note) => {
     const thereIsNoTag = !tagName;
     const theTagIsInTheNote =
       note.tags && note.tags.some((t) => t.name === tagName);
 
-    return thereIsNoTag || theTagIsInTheNote;
-  });
+    const isNotAchivedOrDeleted = note.status === NoteStatus.alive;
+
+    return isNotAchivedOrDeleted && (thereIsNoTag || theTagIsInTheNote);
+  };
+
+  const filterByStatus = (note: Note) => {
+    if (!statusName) return;
+
+    const index = statusName as keyof typeof NoteStatus;
+    const status: NoteStatus = NoteStatus[index];
+
+    console.log("filtering by status", note, statusName, status);
+
+    const isTheRightStatus = note.status === status;
+
+    return isTheRightStatus;
+  };
+
+  const noFilter = (note: Note) => {
+    const isTheRightStatus = note.status === NoteStatus.alive;
+    return isTheRightStatus;
+  };
+
+  const notesToShow = notes?.filter(
+    tagName ? filterByTag : statusName ? filterByStatus : noFilter
+  );
 
   return (
     <Masonry

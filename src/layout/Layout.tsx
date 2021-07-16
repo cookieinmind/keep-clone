@@ -15,6 +15,8 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
+import ArchiveIcon from "@material-ui/icons/Archive";
+import DeleteIcon from "@material-ui/icons/Delete";
 import { useServerContext } from "../context/ServerContext";
 import LabelIcon from "@material-ui/icons/Label";
 import { Link } from "react-router-dom";
@@ -189,6 +191,39 @@ const Layout: React.FunctionComponent<LayoutProps> = ({ children }) => {
                 </ListItem>
               </Link>
             ))}
+        </List>
+
+        <Divider />
+
+        {/* Archived and Deleted */}
+        <List>
+          {/* Archived */}
+          <Link
+            key="Archived"
+            to="/status/archived"
+            className={classes.sidebarLink}
+          >
+            <ListItem button>
+              <ListItemIcon>
+                <ArchiveIcon />
+              </ListItemIcon>
+              <ListItemText primary="archive" />
+            </ListItem>
+          </Link>
+
+          {/* Deleted */}
+          <Link
+            key="Deleted"
+            to="/status/deleted"
+            className={classes.sidebarLink}
+          >
+            <ListItem button>
+              <ListItemIcon>
+                <DeleteIcon />
+              </ListItemIcon>
+              <ListItemText primary="Drash" />
+            </ListItem>
+          </Link>
         </List>
       </Drawer>
 

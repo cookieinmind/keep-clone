@@ -2,8 +2,8 @@ import { useContext } from "react";
 import { createContext } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { AddTags, GetTags } from "../api/tagsAPI";
-import { DeleteNote, GetNotes } from "../api/notesAPI";
-import { Note } from "../models/note";
+import { DeleteNote, GetNotes, UpdateNote } from "../api/notesAPI";
+import { Note, NoteStatus } from "../models/note";
 import { AddNote } from "../api/notesAPI";
 import { Tag } from "../models/tag";
 
@@ -47,11 +47,27 @@ const ServerContextProvider: React.FunctionComponent<ContextProps> = ({
   const { data: tagsOnServer } = useQuery<Tag[], Error>("tags", GetTags);
 
   //*Mutations
-  const { mutateAsync: submitNoteAsyncMutation } = useMutation(AddNote);
+  const { mutateAsync: saveNoteAsyncMutation } = useMutation(AddNote);
   const { mutateAsync: addTagAsyncMutation } = useMutation(AddTags);
+  const { mutateAsync: updateNoteAsync } = useMutation(UpdateNote);
   const { mutateAsync: deleteNoteAsyncMutation } = useMutation(DeleteNote, {
     onSuccess: () => resetNoteQueries(),
   });
+
+  const updateServer = async () => {
+    // if (!notesOnServer) return;
+    // console.log("updating");
+    // for (let index = 0; index < notesOnServer.length; index++) {
+    //   const note = notesOnServer[index];
+    //   note.status = NoteStatus.Alive;
+    //   console.log("on note:", note);
+    //   await permDeleteNoteAsyncMutation(note);
+    //   await saveNoteAsyncMutation(note);
+    // }
+    // resetNoteQueries();
+    // resetTagQueries();
+    // console.log("finish update");
+  };
 
   //* Methods
   const resetNoteQueries = () => {
@@ -63,7 +79,8 @@ const ServerContextProvider: React.FunctionComponent<ContextProps> = ({
   };
 
   const createNote = async (note: Note) => {
-    await submitNoteAsyncMutation(note);
+    console.log("creating");
+    await saveNoteAsyncMutation(note);
     resetNoteQueries();
 
     const newTags = note.tags?.filter((tag) => {
@@ -77,10 +94,26 @@ const ServerContextProvider: React.FunctionComponent<ContextProps> = ({
       await addTagAsyncMutation(newTags);
       resetTagQueries();
     }
+
+    // await updateServer();
   };
 
   const deleteNote = async (note: Note) => {
-    await deleteNoteAsyncMutation(note);
+    switch (note.status) {
+      case NoteStatus.alive:
+      case NoteStatus.archived:
+        note.status = NoteStatus.deleted;
+        await updateNoteAsync(note);
+        break;
+
+      case NoteStatus.deleted:
+        await deleteNoteAsyncMutation(note);
+        break;
+
+      default:
+        throw new Error("server context error");
+    }
+
     resetNoteQueries();
   };
 
@@ -88,7 +121,7 @@ const ServerContextProvider: React.FunctionComponent<ContextProps> = ({
     console.log("server context", "to implement archive");
   };
 
-  //?Things this exposes to everyone else
+  //? Things this exposes to everyone else
   const contextValue: ServerContext = {
     notes: notesOnServer ? notesOnServer : [],
     tags: tagsOnServer ? tagsOnServer : [],
