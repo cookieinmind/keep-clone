@@ -26,46 +26,47 @@ const InputField: React.FunctionComponent<InputFieldProps> = () => {
 
   const handleSubmition = async (note: Note) => {
     const cleanNote = cleanTags(note);
-    const tag: Tag | undefined = serverContext.tags.find(
-      (t) => t.name === tagName
-    );
-
-    if (!tag) throw new Error("input field, no tag found");
-
-    const tagIsNotInAlreadyThere =
-      cleanNote.tags.length < 1 ||
-      cleanNote.tags.some((t) => t.name !== tag.name);
-
-    if (tag && tagIsNotInAlreadyThere) {
-      cleanNote.tags.push(tag);
-    }
-
     serverContext?.createNote(cleanNote);
   };
 
   const cleanTags = (note: Note): Note => {
-    if (!note.tags || note.tags.length < 1) {
-      return {
+    let cleanNote: Note;
+
+    const itDoesntHaveTags = !note.tags || note.tags.length < 1;
+    if (itDoesntHaveTags) {
+      cleanNote = {
         ...note,
         tags: [],
       };
-    }
+    } else {
+      const cleanTags: Tag[] = [];
 
-    const cleanTags: Tag[] = [];
+      for (const dirtyTag of note.tags) {
+        const cleanTag: Tag = {
+          name: dirtyTag.name.replace("#", ""),
+        };
+        cleanTags.push(cleanTag);
+      }
 
-    for (const dirtyTag of note.tags) {
-      const cleanTag: Tag = {
-        name: dirtyTag.name.replace("#", ""),
+      cleanNote = {
+        ...note,
+        tags: cleanTags,
       };
-      cleanTags.push(cleanTag);
     }
 
-    const cleanNote: Note = {
-      // content: note.content,
-      // date: note.date,k
-      ...note,
-      tags: cleanTags,
-    };
+    const tag: Tag | undefined = serverContext.tags.find(
+      (t) => t.name === tagName
+    );
+
+    if (tag) {
+      const tagIsNotInAlreadyThere =
+        cleanNote.tags.length < 1 ||
+        cleanNote.tags.some((t) => t.name !== tag.name);
+
+      if (tag && tagIsNotInAlreadyThere) {
+        cleanNote.tags.push(tag);
+      }
+    }
 
     return cleanNote;
   };
@@ -76,6 +77,7 @@ const InputField: React.FunctionComponent<InputFieldProps> = () => {
     gridTemplateColumns: "repeat(12, 1fr)",
     padding: "50px 100px",
   };
+
   return (
     <div style={containerStyles}>
       {/* <FullInput
