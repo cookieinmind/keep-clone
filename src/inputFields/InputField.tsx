@@ -5,6 +5,7 @@ import { FullInput } from "./FullInput";
 import { Note } from "../models/note";
 import { useServerContext } from "../context/ServerContext";
 import { Tag } from "../models/tag";
+import { useParams } from "react-router-dom";
 
 export interface InputFieldProps {}
 
@@ -12,7 +13,11 @@ const InputField: React.FunctionComponent<InputFieldProps> = () => {
   //Variables
   const [isInputFocused, setIsInputFocused] = useState(false);
 
-  const tagContext = useServerContext();
+  const serverContext = useServerContext();
+
+  let { tag: tagName } = useParams<{
+    tag: string | undefined;
+  }>();
 
   // Functions
   const handleChangeOfInput = (val: boolean) => {
@@ -21,11 +26,30 @@ const InputField: React.FunctionComponent<InputFieldProps> = () => {
 
   const handleSubmition = async (note: Note) => {
     const cleanNote = cleanTags(note);
-    tagContext?.createNote(cleanNote);
+    const tag: Tag | undefined = serverContext.tags.find(
+      (t) => t.name === tagName
+    );
+
+    if (!tag) throw new Error("input field, no tag found");
+
+    const tagIsNotInAlreadyThere =
+      cleanNote.tags.length < 1 ||
+      cleanNote.tags.some((t) => t.name !== tag.name);
+
+    if (tag && tagIsNotInAlreadyThere) {
+      cleanNote.tags.push(tag);
+    }
+
+    serverContext?.createNote(cleanNote);
   };
 
   const cleanTags = (note: Note): Note => {
-    if (!note.tags || note.tags.length < 1) return note;
+    if (!note.tags || note.tags.length < 1) {
+      return {
+        ...note,
+        tags: [],
+      };
+    }
 
     const cleanTags: Tag[] = [];
 

@@ -21,28 +21,31 @@ function App() {
   return (
     <Container className={styles.container}>
       <Layout>
-        <InputField />
-
-        {notes && notes?.length > 0 && (
-          <Switch>
-            {/* Status */}
-            <Route path="/status/:status" exact>
-              <NoteList
-                notes={notes}
-                deteleteNote={deleteNote}
-                archiveNote={archiveNote}
-              />
-            </Route>
-            {/* Tags */}
-            <Route path="/:tag?">
-              <NoteList
-                notes={notes}
-                deteleteNote={deleteNote}
-                archiveNote={archiveNote}
-              />
-            </Route>
-          </Switch>
-        )}
+        <Route path="/:tag?">
+          <InputField />
+        </Route>
+        <Switch>
+          {notes && notes?.length > 0 && (
+            <>
+              {/* Status */}
+              <Route path="/status/:status" exact>
+                <NoteList
+                  notes={notes}
+                  deteleteNote={deleteNote}
+                  archiveNote={archiveNote}
+                />
+              </Route>
+              {/* Tags */}
+              <Route path="/:tag?">
+                <NoteList
+                  notes={notes}
+                  deteleteNote={deleteNote}
+                  archiveNote={archiveNote}
+                />
+              </Route>
+            </>
+          )}
+        </Switch>
       </Layout>
     </Container>
   );

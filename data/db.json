@@ -217,6 +217,17 @@
       ],
       "id": 31,
       "status": "alive"
+    },
+    {
+      "content": "Can't delete tags until you press space (when typing them)",
+      "date": "16-7-2021",
+      "tags": [
+        {
+          "name": "bug"
+        }
+      ],
+      "status": "alive",
+      "id": 32
     }
   ],
   "tags": [
