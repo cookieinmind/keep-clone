@@ -217,38 +217,6 @@
       ],
       "id": 31,
       "status": "alive"
-    },
-    {
-      "content": "deleteme",
-      "date": "15-7-2021",
-      "tags": [],
-      "status": "deleted",
-      "id": 32
-    },
-    {
-      "content": "deleteme",
-      "date": "15-7-2021",
-      "tags": [],
-      "status": "deleted",
-      "id": 33
-    },
-    {
-      "content": " deleteme 2",
-      "date": "16-7-2021",
-      "tags": [
-        {
-          "name": "todo"
-        }
-      ],
-      "status": "deleted",
-      "id": 36
-    },
-    {
-      "content": " deleteme",
-      "date": "16-7-2021",
-      "tags": [],
-      "status": "deleted",
-      "id": 37
     }
   ],
   "tags": [

@@ -118,7 +118,10 @@ const ServerContextProvider: React.FunctionComponent<ContextProps> = ({
   };
 
   const archiveNote = async (note: Note) => {
-    console.log("server context", "to implement archive");
+    console.log("server context", "archiving");
+    note.status = NoteStatus.archived;
+    await updateNoteAsync(note);
+    resetNoteQueries();
   };
 
   //? Things this exposes to everyone else

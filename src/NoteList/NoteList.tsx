@@ -42,8 +42,6 @@ const NoteList: React.FunctionComponent<NoteListProps> = ({
     const index = statusName as keyof typeof NoteStatus;
     const status: NoteStatus = NoteStatus[index];
 
-    console.log("filtering by status", note, statusName, status);
-
     const isTheRightStatus = note.status === status;
 
     return isTheRightStatus;
