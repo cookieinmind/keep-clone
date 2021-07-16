@@ -54,22 +54,23 @@ const ServerContextProvider: React.FunctionComponent<ContextProps> = ({
     onSuccess: () => resetNoteQueries(),
   });
 
-  const updateServer = async () => {
-    // if (!notesOnServer) return;
-    // console.log("updating");
-    // for (let index = 0; index < notesOnServer.length; index++) {
-    //   const note = notesOnServer[index];
-    //   note.status = NoteStatus.Alive;
-    //   console.log("on note:", note);
-    //   await permDeleteNoteAsyncMutation(note);
-    //   await saveNoteAsyncMutation(note);
-    // }
-    // resetNoteQueries();
-    // resetTagQueries();
-    // console.log("finish update");
-  };
+  // const updateServer = async () => {
+  //   // if (!notesOnServer) return;
+  //   // console.log("updating");
+  //   // for (let index = 0; index < notesOnServer.length; index++) {
+  //   //   const note = notesOnServer[index];
+  //   //   note.status = NoteStatus.Alive;
+  //   //   console.log("on note:", note);
+  //   //   await permDeleteNoteAsyncMutation(note);
+  //   //   await saveNoteAsyncMutation(note);
+  //   // }
+  //   // resetNoteQueries();
+  //   // resetTagQueries();
+  //   // console.log("finish update");
+  // };
 
   //* Methods
+
   const resetNoteQueries = () => {
     qryClient.invalidateQueries("notes");
   };

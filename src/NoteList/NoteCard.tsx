@@ -1,17 +1,8 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import TagCarousel from "./TagsCarousel";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
-import {
-  Box,
-  Card,
-  CardContent,
-  CardHeader,
-  IconButton,
-  Paper,
-  Typography,
-} from "@material-ui/core";
+import { Box, IconButton, Paper, Typography } from "@material-ui/core";
 // Icons
-import DeleteIcon from "@material-ui/icons/Delete";
 import BookmarkIcon from "@material-ui/icons/Bookmark";
 import { Note } from "../models/note";
 import ButtonsCarousel from "./ButtonsCarousel";
@@ -72,11 +63,6 @@ const NoteCard: React.FunctionComponent<NoteCardProps> = ({
 
   const handleArchiveNote = () => {
     archiveNote(note);
-  };
-
-  const getTags = (): string | null => {
-    const output = note.tags !== undefined ? note.tags[0] : null;
-    return output ? output.name : "unkown";
   };
 
   const mouseIfOverNote = () => {

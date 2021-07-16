@@ -1,10 +1,8 @@
 import { Box, makeStyles } from "@material-ui/core";
 import ArchiveIcon from "@material-ui/icons/Archive";
 import DeleteIcon from "@material-ui/icons/Delete";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { IconButton, Tooltip } from "@material-ui/core";
 import { IDisappear } from "./IDisappear";
-import { Note } from "../models/note";
 
 const useStyle = makeStyles((props) => {
   return {

@@ -5,7 +5,6 @@ import { Container, makeStyles } from "@material-ui/core";
 import NoteList from "./NoteList/NoteList";
 import { useServerContext } from "./context/ServerContext";
 import { Route, Switch } from "react-router-dom";
-import { NoteStatus } from "./models/note";
 
 const useStyles = makeStyles({
   container: {
@@ -21,30 +20,24 @@ function App() {
   return (
     <Container className={styles.container}>
       <Layout>
-        <Route path="/:tag?">
-          <InputField />
-        </Route>
         <Switch>
-          {notes && notes?.length > 0 && (
-            <>
-              {/* Status */}
-              <Route path="/status/:status" exact>
-                <NoteList
-                  notes={notes}
-                  deteleteNote={deleteNote}
-                  archiveNote={archiveNote}
-                />
-              </Route>
-              {/* Tags */}
-              <Route path="/:tag?">
-                <NoteList
-                  notes={notes}
-                  deteleteNote={deleteNote}
-                  archiveNote={archiveNote}
-                />
-              </Route>
-            </>
-          )}
+          {/* Status */}
+          <Route path="/status/:status" exact>
+            <NoteList
+              notes={notes}
+              deteleteNote={deleteNote}
+              archiveNote={archiveNote}
+            />
+          </Route>
+          {/* Tags */}
+          <Route path="/:tag?">
+            <InputField />
+            <NoteList
+              notes={notes}
+              deteleteNote={deleteNote}
+              archiveNote={archiveNote}
+            />
+          </Route>
         </Switch>
       </Layout>
     </Container>
