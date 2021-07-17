@@ -2,15 +2,24 @@ import React from "react";
 import { useRef } from "react";
 import { InputBase, makeStyles } from "@material-ui/core";
 
-const useStyles = makeStyles({
-  root: {
-    width: "100%",
-    display: "flex",
-    border: "0px solid black",
-  },
+const useStyles = makeStyles((props) => {
+  return {
+    normal: {
+      width: "100%",
+      display: "flex",
+      border: "0px solid black",
+    },
+    bolder: {
+      width: "100%",
+      display: "flex",
+      border: "0px solid black",
+      fontWeight: props.typography.fontWeightMedium,
+    },
+  };
 });
 
 export interface TextFieldProps {
+  bold?: boolean;
   placeholder: string;
   submit: () => void;
 
@@ -20,8 +29,8 @@ export interface TextFieldProps {
   tags: string[];
   setTags: (tags: string[]) => void;
 
-  inputRef: React.RefObject<HTMLInputElement> | null;
-  onLostFocus: (event: React.FocusEvent<HTMLInputElement>) => void;
+  inputRef?: React.RefObject<HTMLInputElement> | null;
+  onLostFocus?: (event: React.FocusEvent<HTMLInputElement>) => void;
 }
 
 const TextField: React.FC<TextFieldProps> = ({
@@ -32,6 +41,7 @@ const TextField: React.FC<TextFieldProps> = ({
   tags,
   setTags,
   onLostFocus,
+  bold,
   inputRef: contentRef,
 }) => {
   const classes = useStyles();
@@ -110,10 +120,10 @@ const TextField: React.FC<TextFieldProps> = ({
     <InputBase
       placeholder={placeholder}
       multiline
-      className={classes.root}
+      className={bold ? classes.bolder : classes.normal}
       onBlur={onLostFocus}
       onChange={handleContentChange}
-      inputRef={contentRef}
+      inputRef={contentRef ? contentRef : null}
       value={content}
       // Using onKeyUp so the backspace can be logged
       onKeyUp={checkForTagCreation}

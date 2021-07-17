@@ -49,6 +49,7 @@ export const FullInput: React.FC<iFullInputProps> = ({
   const contentRef = useRef<HTMLInputElement | null>(null);
 
   const [content, setContent] = useState("");
+  const [title, setTitle] = useState("");
   const [nameOfTags, setNameOfTags] = useState<string[]>([]);
   const [canSubmit, setCanSubmit] = useState<boolean>(false);
 
@@ -108,6 +109,16 @@ export const FullInput: React.FC<iFullInputProps> = ({
 
   return (
     <Paper square className={classes.container}>
+      {/* Title */}
+      <TextField
+        bold={true}
+        placeholder="Title"
+        submit={tryToSubmit}
+        content={title}
+        setContent={setTitle}
+        tags={nameOfTags}
+        setTags={setNameOfTags}
+      />
       {/* Content */}
       <TextField
         placeholder="Take a note..."
