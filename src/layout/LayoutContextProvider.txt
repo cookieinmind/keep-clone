@@ -1,0 +1,36 @@
+// import { useContext, createContext } from "react";
+
+// const LayoutContext = createContext<ILayoutState>({
+//   title: "",
+//   setTitle: (title: string) =>
+//     console.log("layout context provider is loading..."),
+// });
+
+// interface ILayoutState {
+//   title: string;
+//   setTitle: (title: string) => void;
+// }
+
+// export interface LayoutContextProviderProps {
+//   children: React.ReactNode;
+// }
+
+// export const useLayoutContext = () => {
+//   return useContext(LayoutContext);
+// };
+
+// const LayoutContextProvider: React.FC<LayoutContextProviderProps> = ({
+//   children,
+// }) => {
+//   const state: ILayoutState = {
+//     title: "",
+//     setTitle: (title: string) =>
+//       console.log("layout context provider is loading..."),
+//   };
+
+//   return (
+//     <LayoutContext.Provider value={state}>{children}</LayoutContext.Provider>
+//   );
+// };
+
+// export default LayoutContextProvider;

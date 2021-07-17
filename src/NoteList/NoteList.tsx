@@ -1,5 +1,7 @@
+import { useEffect } from "react";
 import Masonry from "react-masonry-css";
 import { useParams } from "react-router-dom";
+import { useLayoutContext } from "../layout/Layout";
 import { Note, NoteStatus } from "../models/note";
 import NoteCard from "./NoteCard";
 
@@ -25,6 +27,18 @@ const NoteList: React.FunctionComponent<NoteListProps> = ({
     tag: string | undefined;
     status: string | undefined;
   }>();
+
+  const { setTitle } = useLayoutContext();
+
+  useEffect(() => {
+    if (tagName) {
+      setTitle(tagName);
+    } else if (statusName) {
+      setTitle(statusName);
+    } else {
+      setTitle("");
+    }
+  }, [tagName, statusName, setTitle]);
 
   const filterByTag = (note: Note) => {
     const thereIsNoTag = !tagName;

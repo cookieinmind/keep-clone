@@ -20,6 +20,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import { useServerContext } from "../context/ServerContext";
 import LabelIcon from "@material-ui/icons/Label";
 import { Link } from "react-router-dom";
+import { useContext, createContext } from "react";
 
 const drawerWidth = 240;
 
@@ -102,11 +103,27 @@ export interface LayoutProps {
   children: React.ReactNode;
 }
 
+const mockState = {
+  setTitle: (title: string) =>
+    console.log("called mock state from layout context "),
+};
+//* Context stuff
+const LayoutContext = createContext<ILayoutState>(mockState);
+
+interface ILayoutState {
+  setTitle: (title: string) => void;
+}
+
+export const useLayoutContext = () => {
+  return useContext(LayoutContext);
+};
+
 const Layout: React.FunctionComponent<LayoutProps> = ({ children }) => {
   //UI stuff
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [title, setTitle] = React.useState<string>("");
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -118,6 +135,10 @@ const Layout: React.FunctionComponent<LayoutProps> = ({ children }) => {
 
   //Server stuff
   const { tags } = useServerContext();
+
+  const state: ILayoutState = {
+    setTitle,
+  };
 
   //!Return
   return (
@@ -143,7 +164,7 @@ const Layout: React.FunctionComponent<LayoutProps> = ({ children }) => {
           </IconButton>
           <Link to="/" className={classes.homeButton}>
             <Typography variant="h6" noWrap>
-              Keep Clone
+              {title !== "" ? title : "Keep Clone"}
             </Typography>
           </Link>
         </Toolbar>
@@ -230,7 +251,9 @@ const Layout: React.FunctionComponent<LayoutProps> = ({ children }) => {
       {/* Main */}
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        {children}
+        <LayoutContext.Provider value={state}>
+          {children}
+        </LayoutContext.Provider>
       </main>
     </div>
   );

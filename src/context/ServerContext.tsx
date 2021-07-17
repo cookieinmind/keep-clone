@@ -16,9 +16,9 @@ const mockContext = {
   archiveNote: () => console.log("loading context"),
 };
 
-const ServerCtx = createContext<ServerContext>(mockContext);
+const ServerCtx = createContext<IServerState>(mockContext);
 
-interface ServerContext {
+interface IServerState {
   tags: Tag[];
   notes: Note[];
   createNote: (note: Note) => void;
@@ -126,7 +126,7 @@ const ServerContextProvider: React.FunctionComponent<ContextProps> = ({
   };
 
   //? Things this exposes to everyone else
-  const contextValue: ServerContext = {
+  const contextValue: IServerState = {
     notes: notesOnServer ? notesOnServer : [],
     tags: tagsOnServer ? tagsOnServer : [],
     createNote,
