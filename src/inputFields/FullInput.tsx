@@ -1,9 +1,11 @@
 import React from "react";
 import { useRef, useState, useEffect } from "react";
 import { Note, NoteStatus } from "../models/note";
-import { InputBase, Box, makeStyles, Paper, Button } from "@material-ui/core";
+import { Box, makeStyles, Paper, Button } from "@material-ui/core";
 import TagsContainer from "./TagsContainer";
 import { Tag } from "../models/tag";
+
+import TextField from "./TextField";
 
 const useStyles = makeStyles({
   test: {
@@ -20,14 +22,6 @@ const useStyles = makeStyles({
     gap: "24px",
     gridColumn: "4/10",
     borderRadius: "5px",
-  },
-  textField: {
-    width: "100%",
-    display: "flex",
-    border: "0px solid black",
-    "&::after": {
-      content: "-",
-    },
   },
   footer: {
     width: "100%",
@@ -52,71 +46,26 @@ export const FullInput: React.FC<iFullInputProps> = ({
   //Fields
   const hideThisComponent = () => setIsInputFocused(false);
   const classes = useStyles();
-  const inputFieldElement = useRef<HTMLInputElement>(null);
-  const [noteContent, setNoteContent] = useState("");
+  const contentRef = useRef<HTMLInputElement | null>(null);
 
-  const isCreatingTag = useRef<boolean>(false);
-  const tag = useRef<string>("");
+  const [content, setContent] = useState("");
   const [nameOfTags, setNameOfTags] = useState<string[]>([]);
   const [canSubmit, setCanSubmit] = useState<boolean>(false);
 
   //Check if the submit button should be available
   useEffect(() => {
-    setCanSubmit(noteContent !== "");
-  }, [noteContent]);
+    setCanSubmit(content !== "");
+  }, [content]);
 
   //Focus on the input as soon as it gets rendered
   useEffect(() => {
-    inputFieldElement.current?.focus();
-  }, [inputFieldElement]);
+    contentRef.current?.focus();
+  }, [contentRef]);
 
   //* Methods that change state
-  const handleLostOfFocus = (event: React.FocusEvent<HTMLInputElement>) => {
-    const userClickedOutsideTheInput = event.relatedTarget === null;
-    if (userClickedOutsideTheInput) hideThisComponent();
-  };
-
-  const handleContentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNoteContent(event.target.value);
-  };
-
-  const handleKeyPressed = (e: React.KeyboardEvent) => {
-    //Ignore the shift stroke
-    if (e.key === "Shift") return;
-
-    const pressedHashtag = e.key === "#";
-    const pressedSpace = e.key === " ";
-
-    if (pressedHashtag) {
-      isCreatingTag.current = true;
-      return;
-    } else if (pressedSpace) isCreatingTag.current = false;
-
-    const thereIsATagToSubmit = tag.current !== "";
-
-    if (isCreatingTag.current) {
-      tag.current = updateTag(e.key, tag.current);
-    } else if (thereIsATagToSubmit) {
-      handleTagSubmition();
-    }
-
-    const keyIsEnter = e.code === "Enter";
-    const isCtrlPressed = e.nativeEvent.ctrlKey;
-    if (keyIsEnter && isCtrlPressed) {
-      handleNoteSubmition();
-    }
-  };
-
-  const handleTagSubmition = () => {
-    setNameOfTags([...nameOfTags, tag.current]);
-    const cleanContent = cleanTagOfContent(tag.current, noteContent);
-    setNoteContent(cleanContent);
-    tag.current = "";
-  };
-
-  const handleNoteSubmition = () => {
-    const thereIsATagToSubmit = tag.current !== "";
-    if (thereIsATagToSubmit) handleTagSubmition();
+  const tryToSubmit = () => {
+    //check
+    console.log(content, nameOfTags);
 
     const today = new Date();
     const date =
@@ -127,7 +76,7 @@ export const FullInput: React.FC<iFullInputProps> = ({
       today.getFullYear();
 
     const note = {
-      content: noteContent,
+      content,
       date,
       tags: convertStringToTag(nameOfTags),
       status: NoteStatus.alive,
@@ -137,28 +86,12 @@ export const FullInput: React.FC<iFullInputProps> = ({
     hideThisComponent();
   };
 
+  const handleLostOfFocus = (event: React.FocusEvent<HTMLInputElement>) => {
+    const userClickedOutsideTheInput = event.relatedTarget === null;
+    if (userClickedOutsideTheInput) hideThisComponent();
+  };
+
   //*Tags helper methods
-  const updateTag = (newTerm: string, oldTag: string): string => {
-    let newTag = oldTag;
-    if (newTerm === "Backspace") {
-      if (oldTag.length < 1) isCreatingTag.current = false;
-      const oneLessTerm = oldTag.slice(0, oldTag.length - 1);
-      newTag = oneLessTerm;
-    } else {
-      newTag += newTerm;
-    }
-
-    return newTag;
-  };
-
-  const cleanTagOfContent = (tag: string, content: string): string => {
-    let output: undefined | string = "";
-
-    output = content.replace(tag, "");
-
-    return output.replace("#", "").trim() + " ";
-  };
-
   const convertStringToTag = (names: string[]): Tag[] => {
     return names.map((name) => {
       return {
@@ -175,24 +108,25 @@ export const FullInput: React.FC<iFullInputProps> = ({
 
   return (
     <Paper square className={classes.container}>
-      <InputBase
+      {/* Content */}
+      <TextField
         placeholder="Take a note..."
-        multiline
-        className={classes.textField}
-        onBlur={handleLostOfFocus}
-        onChange={handleContentChange}
-        inputRef={inputFieldElement}
-        value={noteContent}
-        // Using onKeyUp so the backspace can be logged
-        onKeyUp={handleKeyPressed}
+        submit={tryToSubmit}
+        content={content}
+        setContent={setContent}
+        tags={nameOfTags}
+        setTags={setNameOfTags}
+        onLostFocus={handleLostOfFocus}
+        inputRef={contentRef}
       />
+
       <Box className={classes.footer}>
         {nameOfTags?.length > 0 && (
           <TagsContainer tags={nameOfTags} onDeletion={handleTagDeletion} />
         )}
         <Button
           className={classes.submitButton}
-          onClick={handleNoteSubmition}
+          onClick={tryToSubmit}
           disabled={!canSubmit}
         >
           Save
