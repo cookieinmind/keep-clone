@@ -143,7 +143,7 @@ const Layout: React.FunctionComponent<LayoutProps> = ({ children }) => {
           </IconButton>
           <Link to="/" className={classes.homeButton}>
             <Typography variant="h6" noWrap>
-              Google Keep Clone
+              Keep Clone
             </Typography>
           </Link>
         </Toolbar>
