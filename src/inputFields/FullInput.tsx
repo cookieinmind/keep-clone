@@ -8,18 +8,24 @@ import { Tag } from "../models/tag";
 import TextField from "./TextField";
 
 const useStyles = makeStyles({
-  test: {
-    backgroundColor: "#121212",
+  inputsContainer: {
+    width: "100%",
+    display: "flex",
+    height: "auto",
+    flexDirection: "column",
+    alignItems: "flex-end",
+    gap: "0.5rem",
+    borderRadius: "5px",
   },
-  container: {
+  root: {
     width: "100%",
     display: "flex",
     height: "auto",
     minHeight: "100px",
     flexDirection: "column",
     alignItems: "flex-end",
-    padding: "8px 16px",
-    gap: "24px",
+    padding: "1rem 1rem",
+    gap: "1.5rem",
     gridColumn: "4/10",
     borderRadius: "5px",
   },
@@ -88,6 +94,7 @@ export const FullInput: React.FC<iFullInputProps> = ({
   };
 
   const handleLostOfFocus = (event: React.FocusEvent<HTMLInputElement>) => {
+    console.log(event);
     const userClickedOutsideTheInput = event.relatedTarget === null;
     if (userClickedOutsideTheInput) hideThisComponent();
   };
@@ -108,28 +115,32 @@ export const FullInput: React.FC<iFullInputProps> = ({
   };
 
   return (
-    <Paper square className={classes.container}>
-      {/* Title */}
-      <TextField
-        bold={true}
-        placeholder="Title"
-        submit={tryToSubmit}
-        content={title}
-        setContent={setTitle}
-        tags={nameOfTags}
-        setTags={setNameOfTags}
-      />
-      {/* Content */}
-      <TextField
-        placeholder="Take a note..."
-        submit={tryToSubmit}
-        content={content}
-        setContent={setContent}
-        tags={nameOfTags}
-        setTags={setNameOfTags}
-        onLostFocus={handleLostOfFocus}
-        inputRef={contentRef}
-      />
+    <Paper square className={classes.root}>
+      {/* Input fields */}
+      <Box className={classes.inputsContainer} onBlur={handleLostOfFocus}>
+        {/* Title */}
+        <TextField
+          bold={true}
+          placeholder="Title"
+          submit={tryToSubmit}
+          content={title}
+          setContent={setTitle}
+          tags={nameOfTags}
+          // onLostFocus={handleLostOfFocus}
+          setTags={setNameOfTags}
+        />
+        {/* Content */}
+        <TextField
+          placeholder="Take a note..."
+          submit={tryToSubmit}
+          content={content}
+          setContent={setContent}
+          tags={nameOfTags}
+          setTags={setNameOfTags}
+          // onLostFocus={handleLostOfFocus}
+          inputRef={contentRef}
+        />
+      </Box>
 
       <Box className={classes.footer}>
         {nameOfTags?.length > 0 && (

@@ -250,8 +250,20 @@
           "id": 4
         }
       ],
-      "status": "alive",
+      "status": "archived",
       "id": 34
+    },
+    {
+      "content": "if there's no tags, show a \"create tag\" in the sidebar ",
+      "date": "17-7-2021",
+      "tags": [
+        {
+          "name": "ui",
+          "id": 4
+        }
+      ],
+      "status": "alive",
+      "id": 35
     }
   ],
   "tags": [
