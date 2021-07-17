@@ -226,7 +226,7 @@
           "name": "bug"
         }
       ],
-      "status": "alive",
+      "status": "archived",
       "id": 32
     },
     {
@@ -240,6 +240,18 @@
       ],
       "status": "alive",
       "id": 33
+    },
+    {
+      "content": "add a title",
+      "date": "17-7-2021",
+      "tags": [
+        {
+          "name": "ui",
+          "id": 4
+        }
+      ],
+      "status": "alive",
+      "id": 34
     }
   ],
   "tags": [

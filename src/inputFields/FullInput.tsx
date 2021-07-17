@@ -89,6 +89,7 @@ export const FullInput: React.FC<iFullInputProps> = ({
 
     if (pressedHashtag) {
       isCreatingTag.current = true;
+      return;
     } else if (pressedSpace) isCreatingTag.current = false;
 
     const thereIsATagToSubmit = tag.current !== "";
@@ -140,8 +141,9 @@ export const FullInput: React.FC<iFullInputProps> = ({
   const updateTag = (newTerm: string, oldTag: string): string => {
     let newTag = oldTag;
     if (newTerm === "Backspace") {
-      const deleted = oldTag.slice(0, oldTag.length - 1);
-      newTag = deleted;
+      if (oldTag.length < 1) isCreatingTag.current = false;
+      const oneLessTerm = oldTag.slice(0, oldTag.length - 1);
+      newTag = oneLessTerm;
     } else {
       newTag += newTerm;
     }
@@ -154,7 +156,7 @@ export const FullInput: React.FC<iFullInputProps> = ({
 
     output = content.replace(tag, "");
 
-    return output.trim() + " ";
+    return output.replace("#", "").trim() + " ";
   };
 
   const convertStringToTag = (names: string[]): Tag[] => {
