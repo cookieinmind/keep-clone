@@ -1,5 +1,10 @@
 import { Note } from "../models/note";
-import { saveNote, getNotes } from "./localStorage/localStorage";
+import {
+  saveNote,
+  getNotes,
+  deleteNote,
+  updateNote,
+} from "./localStorage/localStorage";
 
 const BASE_URL = "http://localhost:8000/notes";
 
@@ -8,15 +13,7 @@ export const GetNotes = async (): Promise<Note[]> => {
 };
 
 export const DeleteNote = async (note: Note) => {
-  const id = note.id;
-
-  const url = BASE_URL + "/" + id;
-
-  const body = { method: "DELETE" };
-
-  const response = await fetch(url, body);
-
-  return response.json();
+  return deleteNote(note);
 };
 
 export const AddNote = async (note: Note): Promise<Note> => {
@@ -24,17 +21,5 @@ export const AddNote = async (note: Note): Promise<Note> => {
 };
 
 export const UpdateNote = async (note: Note) => {
-  const body = {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(note),
-  };
-
-  const url = BASE_URL + "/" + note.id;
-
-  console.log(url);
-
-  const response = await fetch(url, body);
-
-  return response.json();
+  return updateNote(note);
 };

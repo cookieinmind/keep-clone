@@ -38,4 +38,37 @@ export const getNotes = (): Promise<Note[]> => {
   });
 };
 
+export const updateNote = async (note: Note): Promise<Note> => {
+  //Get all the current notes
+  const serverNotes: Note[] = await getNotes();
+
+  //the notes without the updated one
+  const leftOverNotes: Note[] = serverNotes.filter((n) => n.id !== note.id);
+
+  //update the array
+  const newNotes: Note[] = [...leftOverNotes, note];
+
+  //save it in the local storage
+  localStorage.setItem(notes_key, JSON.stringify(newNotes));
+
+  return new Promise((resolve) => {
+    resolve(note);
+  });
+};
+
+export const deleteNote = async (note: Note): Promise<Note> => {
+  //Get all the current notes
+  const oldNotes: Note[] = await getNotes();
+
+  //update the notes
+  const newNotes = oldNotes.filter((n) => n.id !== note.id);
+
+  //save it in the local storage
+  localStorage.setItem(notes_key, JSON.stringify(newNotes));
+
+  return new Promise((resolve) => {
+    resolve(note);
+  });
+};
+
 // export const updateNote = (note: Note) => {};
