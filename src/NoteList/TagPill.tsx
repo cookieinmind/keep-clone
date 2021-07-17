@@ -7,6 +7,7 @@ const useStyles = makeStyles({
     borderRadius: "10px",
     fontVariant: "small-caps",
     fontWeight: "bold",
+    fontSize: "0.688rem",
     padding: "0.25em 0.75em",
   },
 });

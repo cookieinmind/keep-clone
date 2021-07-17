@@ -71,9 +71,7 @@ export const FullInput: React.FC<iFullInputProps> = ({
 
   //* Methods that change state
   const tryToSubmit = () => {
-    //check
-    console.log(content, nameOfTags);
-
+    if (!canSubmit) return;
     const today = new Date();
     const date =
       today.getDate() +
@@ -83,6 +81,7 @@ export const FullInput: React.FC<iFullInputProps> = ({
       today.getFullYear();
 
     const note = {
+      title,
       content,
       date,
       tags: convertStringToTag(nameOfTags),
@@ -94,7 +93,6 @@ export const FullInput: React.FC<iFullInputProps> = ({
   };
 
   const handleLostOfFocus = (event: React.FocusEvent<HTMLInputElement>) => {
-    console.log(event);
     const userClickedOutsideTheInput = event.relatedTarget === null;
     if (userClickedOutsideTheInput) hideThisComponent();
   };

@@ -13,7 +13,7 @@ export interface NoteCardProps {
   archiveNote: (note: Note) => void;
 }
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles((props) =>
   createStyles({
     root: {
       cursor: "pointer",
@@ -36,17 +36,22 @@ const useStyles = makeStyles((theme: Theme) =>
       width: "100%",
       display: "flex",
       gap: "1rem",
-      alignItems: "flex-start",
+      justifyContent: "flex-start",
+      alignItems: "start",
     },
     title: {
       flex: "1 1 auto",
-      fontSize: "1rem",
+      fontSize: "1.375rem",
+      fontWeight: props.typography.fontWeightMedium,
+    },
+    content: {
+      flex: "1 1 auto",
+      fontSize: "0.875rem",
+      fontWeight: props.typography.fontWeightRegular,
     },
     headerButton: {
       padding: 0,
       visibility: "hidden",
-      // "&:hover": {
-      // },
     },
     actionsContainer: {
       justifyContent: "flex-start",
@@ -90,10 +95,12 @@ const NoteCard: React.FunctionComponent<NoteCardProps> = ({
       {/* Header Container: Title + Special Icon container */}
       <Box className={c.headerContainer}>
         {/* Title of the note */}
-        <Typography className={c.title}>
-          {/* <Box fontWeight="fontWeightMedium"></Box> */}
-          {note.content}
-        </Typography>
+        {note.title && (
+          <Typography className={c.title}>{note.title}</Typography>
+        )}
+        {!note.title && (
+          <Typography className={c.content}>{note.content}</Typography>
+        )}
 
         {/* The special icon */}
         <IconButton className={c.headerButton} id="headerButton">
@@ -101,8 +108,10 @@ const NoteCard: React.FunctionComponent<NoteCardProps> = ({
         </IconButton>
       </Box>
 
-      {/* Content */}
-      {/* To do */}
+      {/* Content if there's no title*/}
+      {note.title && (
+        <Typography className={c.content}>{note.content}</Typography>
+      )}
 
       {/* Tags */}
       {note.tags && <TagCarousel tags={note.tags} />}
