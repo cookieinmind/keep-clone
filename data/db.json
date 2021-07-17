@@ -62,7 +62,7 @@
         }
       ],
       "id": 20,
-      "status": "alive"
+      "status": "archived"
     },
     {
       "content": "Create a way to edit tags (delete, rename, etc) ",
@@ -90,7 +90,7 @@
         }
       ],
       "id": 22,
-      "status": "alive"
+      "status": "archived"
     },
     {
       "content": "make the input be responsive ",
@@ -132,7 +132,7 @@
         }
       ],
       "id": 25,
-      "status": "alive"
+      "status": "archived"
     },
     {
       "content": " Improve the way the \"last edited\" looks",
@@ -146,7 +146,7 @@
         }
       ],
       "id": 26,
-      "status": "alive"
+      "status": "archived"
     },
     {
       "content": "add a search bar",
@@ -188,7 +188,7 @@
         }
       ],
       "id": 29,
-      "status": "alive"
+      "status": "archived"
     },
     {
       "content": " Colors to notes and tags",
@@ -228,6 +228,18 @@
       ],
       "status": "alive",
       "id": 32
+    },
+    {
+      "content": "make it possible to delete a tag without fucking over the notes that have that tag",
+      "date": "17-7-2021",
+      "tags": [
+        {
+          "name": "functionality",
+          "id": 5
+        }
+      ],
+      "status": "alive",
+      "id": 33
     }
   ],
   "tags": [
