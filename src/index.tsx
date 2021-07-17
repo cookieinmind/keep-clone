@@ -4,7 +4,7 @@ import "./index.css";
 import App from "./App";
 import { Provider } from "react-redux";
 import { store } from "./state/store";
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { QueryClient, QueryClientProvider } from "react-query";
 import ServerContextProvider from "./context/ServerContext";
@@ -16,11 +16,11 @@ ReactDOM.render(
     <CssBaseline />
     <QueryClientProvider client={queryClient}>
       <ServerContextProvider>
-        <Router>
+        <BrowserRouter>
           <Provider store={store}>
             <App></App>
           </Provider>
-        </Router>
+        </BrowserRouter>
       </ServerContextProvider>
     </QueryClientProvider>
   </React.StrictMode>,
