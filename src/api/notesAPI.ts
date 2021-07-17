@@ -6,8 +6,6 @@ import {
   updateNote,
 } from "./localStorage/localStorage";
 
-const BASE_URL = "http://localhost:8000/notes";
-
 export const GetNotes = async (): Promise<Note[]> => {
   return getNotes();
 };
