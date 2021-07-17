@@ -1,7 +1,7 @@
 import { Tag } from "./tag";
 
 export type Note = {
-  id?: number;
+  id?: number | string;
   content: string;
   tags: Tag[];
   date?: string;
