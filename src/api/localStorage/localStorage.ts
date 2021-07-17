@@ -1,8 +1,11 @@
 import { Note } from "../../models/note";
 import { v4 as uuidv4 } from "uuid";
+import { Tag } from "../../models/tag";
 
-const notes_key = "KEEP-CLONE__NOTE";
+const notes_key = "KEEP-CLONE__NOTES";
+const tags_key = "KEEP-CLONE__TAGS";
 
+//*NOTES
 export const saveNote = async (note: Note): Promise<Note> => {
   //create an ID for the note
   const id: string = uuidv4();
@@ -71,4 +74,42 @@ export const deleteNote = async (note: Note): Promise<Note> => {
   });
 };
 
-// export const updateNote = (note: Note) => {};
+//*TAGS
+export const getTags = (): Promise<Tag[]> => {
+  const result = localStorage.getItem(tags_key);
+  let output: Tag[];
+
+  if (result) {
+    const tags = JSON.parse(result);
+    output = tags;
+  } else output = [];
+
+  return new Promise((resolve) => {
+    resolve(output);
+  });
+};
+
+export const saveTags = async (tags: Tag[]): Promise<Tag[]> => {
+  const addOnTags: Tag[] = tags.map((tag) => {
+    //create an ID for the note
+    const id: string = uuidv4();
+
+    //Give the tag the ID
+    tag.id = id;
+
+    return tag;
+  });
+
+  //Get all the current notes
+  const oldTags: Tag[] = await getTags();
+
+  //update the notes
+  const newTags = [...addOnTags, ...oldTags];
+
+  //save it in the local storage
+  localStorage.setItem(tags_key, JSON.stringify(newTags));
+
+  return new Promise((resolve) => {
+    resolve(addOnTags);
+  });
+};
