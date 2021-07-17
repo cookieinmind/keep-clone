@@ -1,4 +1,5 @@
 import { Note } from "../models/note";
+import { saveNote } from "./localStorage/localStorage";
 
 const BASE_URL = "http://localhost:8000/notes";
 
@@ -21,14 +22,7 @@ export const DeleteNote = async (note: Note) => {
 };
 
 export const AddNote = async (note: Note): Promise<Note> => {
-  const body = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(note),
-  };
-  const response = await fetch(BASE_URL, body);
-
-  return response.json();
+  return saveNote(note);
 };
 
 export const UpdateNote = async (note: Note) => {
