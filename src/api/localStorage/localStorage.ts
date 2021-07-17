@@ -113,3 +113,36 @@ export const saveTags = async (tags: Tag[]): Promise<Tag[]> => {
     resolve(addOnTags);
   });
 };
+
+export const updateTag = async (tag: Tag): Promise<Tag> => {
+  //Get all the current notes
+  const serverTags: Tag[] = await getTags();
+
+  //the notes without the updated one
+  const leftOverTags: Tag[] = serverTags.filter((t) => t.id !== tag.id);
+
+  //update the array
+  const newTags: Tag[] = [...leftOverTags, tag];
+
+  //save it in the local storage
+  localStorage.setItem(tags_key, JSON.stringify(newTags));
+
+  return new Promise((resolve) => {
+    resolve(tag);
+  });
+};
+
+export const deleteTag = async (tag: Tag): Promise<Tag> => {
+  //Get all the current notes
+  const oldTags: Tag[] = await getTags();
+
+  //update the notes
+  const newTags = oldTags.filter((t) => t.id !== tag.id);
+
+  //save it in the local storage
+  localStorage.setItem(tags_key, JSON.stringify(newTags));
+
+  return new Promise((resolve) => {
+    resolve(tag);
+  });
+};
