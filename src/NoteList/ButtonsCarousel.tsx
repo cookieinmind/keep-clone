@@ -44,13 +44,13 @@ const ButtonsCarousel: React.FC<ButtonsCarouselProps> = ({
     <Box className={visible ? c.root : c.rootHide}>
       <Tooltip title="Archive">
         <IconButton className={c.button} onClick={archiveNote}>
-          <ArchiveIcon />
+          <ArchiveIcon fontSize="small" />
         </IconButton>
       </Tooltip>
 
       <Tooltip title="Delete">
         <IconButton className={c.button} onClick={deleteNote}>
-          <DeleteIcon />
+          <DeleteIcon fontSize="small" />
         </IconButton>
       </Tooltip>
 
