@@ -104,6 +104,7 @@ export interface LayoutProps {
 }
 
 const mockState = {
+  title: "loading layout context",
   setTitle: (title: string) =>
     console.log("called mock state from layout context "),
 };
@@ -111,6 +112,7 @@ const mockState = {
 const LayoutContext = createContext<ILayoutState>(mockState);
 
 interface ILayoutState {
+  title: string;
   setTitle: (title: string) => void;
 }
 
@@ -137,6 +139,7 @@ const Layout: React.FunctionComponent<LayoutProps> = ({ children }) => {
   const { tags } = useServerContext();
 
   const state: ILayoutState = {
+    title,
     setTitle,
   };
 
@@ -242,7 +245,7 @@ const Layout: React.FunctionComponent<LayoutProps> = ({ children }) => {
               <ListItemIcon>
                 <DeleteIcon />
               </ListItemIcon>
-              <ListItemText primary="Drash" />
+              <ListItemText primary="Bin" />
             </ListItem>
           </Link>
         </List>
