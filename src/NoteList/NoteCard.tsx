@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import TagCarousel from "./TagsCarousel";
-import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
+import { makeStyles, createStyles } from "@material-ui/core/styles";
 import { Box, IconButton, Typography } from "@material-ui/core";
 // Icons
 import BookmarkIcon from "@material-ui/icons/Bookmark";
