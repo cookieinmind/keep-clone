@@ -217,7 +217,7 @@ const Layout: React.FunctionComponent<LayoutProps> = ({ children }) => {
             ))}
         </List>
 
-        <Divider />
+        {tags && <Divider />}
 
         {/* Archived and Deleted */}
         <List>
