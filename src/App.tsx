@@ -5,6 +5,7 @@ import { Container, makeStyles } from "@material-ui/core";
 import NoteList from "./NoteList/NoteList";
 import { useServerContext } from "./context/ServerContext";
 import { Route, Switch } from "react-router-dom";
+import { useEffect } from "react";
 
 const useStyles = makeStyles({
   container: {
@@ -16,6 +17,8 @@ function App() {
   const styles = useStyles();
 
   const { notes, deleteNote, archiveNote } = useServerContext();
+
+  useEffect(() => console.log("this app is running with local storage"), []);
 
   return (
     <Container className={styles.container}>

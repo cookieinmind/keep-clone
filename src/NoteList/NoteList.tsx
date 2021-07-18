@@ -45,7 +45,7 @@ const NoteList: React.FunctionComponent<NoteListProps> = ({
     status: string | undefined;
   }>();
 
-  const { title, setTitle } = useLayoutContext();
+  const { setTitle } = useLayoutContext();
   const [currentStyle, setStyle] = useState<styles>(styles.All);
 
   useEffect(() => {
