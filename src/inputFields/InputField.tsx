@@ -6,11 +6,22 @@ import { Note } from "../models/note";
 import { useServerContext } from "../context/ServerContext";
 import { Tag } from "../models/tag";
 import { useParams } from "react-router-dom";
+import { Grid, makeStyles } from "@material-ui/core";
+
+const useStyles = makeStyles((props) => {
+  return {
+    root: {
+      width: "100%",
+      justifyContent: "center",
+    },
+  };
+});
 
 export interface InputFieldProps {}
 
 const InputField: React.FunctionComponent<InputFieldProps> = () => {
   //Variables
+  const classes = useStyles();
   const [isInputFocused, setIsInputFocused] = useState(false);
 
   const serverContext = useServerContext();
@@ -71,33 +82,28 @@ const InputField: React.FunctionComponent<InputFieldProps> = () => {
     return cleanNote;
   };
 
-  //Styles
-  const containerStyles = {
-    display: "grid",
-    gridTemplateColumns: "repeat(12, 1fr)",
-    padding: "50px 100px",
-  };
-
   return (
-    <div style={containerStyles}>
+    <Grid container className={classes.root}>
       {/* <FullInput
         isInputFocused={isInputFocused}
         setIsInputFocused={handleChangeOfInput}
         addNote={handleSubmition}
       /> */}
-      {isInputFocused ? (
-        <FullInput
-          isInputFocused={isInputFocused}
-          setIsInputFocused={handleChangeOfInput}
-          addNote={handleSubmition}
-        />
-      ) : (
-        <CompactInput
-          isInputFocused={isInputFocused}
-          setIsInputFocused={handleChangeOfInput}
-        />
-      )}
-    </div>
+      <Grid item xs={10} sm={8} md={6} lg={4}>
+        {isInputFocused ? (
+          <FullInput
+            isInputFocused={isInputFocused}
+            setIsInputFocused={handleChangeOfInput}
+            addNote={handleSubmition}
+          />
+        ) : (
+          <CompactInput
+            isInputFocused={isInputFocused}
+            setIsInputFocused={handleChangeOfInput}
+          />
+        )}
+      </Grid>
+    </Grid>
   );
 };
 

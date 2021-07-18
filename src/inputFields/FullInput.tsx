@@ -8,17 +8,7 @@ import { Tag } from "../models/tag";
 import TextField from "./TextField";
 
 const useStyles = makeStyles({
-  inputsContainer: {
-    width: "100%",
-    display: "flex",
-    height: "auto",
-    flexDirection: "column",
-    alignItems: "flex-end",
-    gap: "0.5rem",
-    borderRadius: "5px",
-  },
   root: {
-    width: "100%",
     display: "flex",
     height: "auto",
     minHeight: "100px",
@@ -27,6 +17,15 @@ const useStyles = makeStyles({
     padding: "1rem 1rem",
     gap: "1.5rem",
     gridColumn: "4/10",
+    borderRadius: "5px",
+  },
+  inputsContainer: {
+    width: "100%",
+    display: "flex",
+    height: "auto",
+    flexDirection: "column",
+    alignItems: "flex-end",
+    gap: "0.5rem",
     borderRadius: "5px",
   },
   footer: {
