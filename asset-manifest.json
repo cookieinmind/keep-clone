@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/juanc212/keep-clone.git/static/css/main.6a8f2b4c.chunk.css",
+    "main.js": "/juanc212/keep-clone.git/static/js/main.4b4c92fb.chunk.js",
+    "main.js.map": "/juanc212/keep-clone.git/static/js/main.4b4c92fb.chunk.js.map",
+    "runtime-main.js": "/juanc212/keep-clone.git/static/js/runtime-main.e30bf314.js",
+    "runtime-main.js.map": "/juanc212/keep-clone.git/static/js/runtime-main.e30bf314.js.map",
+    "static/js/2.de037bfa.chunk.js": "/juanc212/keep-clone.git/static/js/2.de037bfa.chunk.js",
+    "static/js/2.de037bfa.chunk.js.map": "/juanc212/keep-clone.git/static/js/2.de037bfa.chunk.js.map",
+    "index.html": "/juanc212/keep-clone.git/index.html",
+    "static/css/main.6a8f2b4c.chunk.css.map": "/juanc212/keep-clone.git/static/css/main.6a8f2b4c.chunk.css.map",
+    "static/js/2.de037bfa.chunk.js.LICENSE.txt": "/juanc212/keep-clone.git/static/js/2.de037bfa.chunk.js.LICENSE.txt",
+    "static/js/main.4b4c92fb.chunk.js.LICENSE.txt": "/juanc212/keep-clone.git/static/js/main.4b4c92fb.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.e30bf314.js",
+    "static/js/2.de037bfa.chunk.js",
+    "static/css/main.6a8f2b4c.chunk.css",
+    "static/js/main.4b4c92fb.chunk.js"
+  ]
+}
