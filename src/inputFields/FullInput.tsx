@@ -60,8 +60,8 @@ export const FullInput: React.FC<iFullInputProps> = ({
 
   //Check if the submit button should be available
   useEffect(() => {
-    setCanSubmit(content !== "");
-  }, [content]);
+    setCanSubmit(content !== "" || title !== "");
+  }, [content, title]);
 
   //Focus on the input as soon as it gets rendered
   useEffect(() => {
