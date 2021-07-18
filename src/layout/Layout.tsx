@@ -13,6 +13,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ListItem from "@material-ui/core/ListItem";
+import HomeRoundedIcon from "@material-ui/icons/HomeRounded";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import ArchiveIcon from "@material-ui/icons/Archive";
@@ -201,6 +202,17 @@ const Layout: React.FunctionComponent<LayoutProps> = ({ children }) => {
         <Divider />
 
         <List>
+          <Link to="/" className={classes.sidebarLink}>
+            <ListItem button>
+              <ListItemIcon>
+                <HomeRoundedIcon />
+              </ListItemIcon>
+              <ListItemText primary={"Keep Clone"} />
+            </ListItem>
+          </Link>
+
+          {tags && tags.length > 0 && <Divider />}
+
           {tags &&
             tags.map((tag) => (
               <Link
@@ -218,7 +230,7 @@ const Layout: React.FunctionComponent<LayoutProps> = ({ children }) => {
             ))}
         </List>
 
-        {tags && <Divider />}
+        <Divider />
 
         {/* Archived and Deleted */}
         <List>
