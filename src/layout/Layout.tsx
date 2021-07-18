@@ -21,6 +21,7 @@ import { useServerContext } from "../context/ServerContext";
 import LabelIcon from "@material-ui/icons/Label";
 import { Link } from "react-router-dom";
 import { useContext, createContext } from "react";
+import { Capitalize } from "../utlis/stringHelpers";
 
 const drawerWidth = 240;
 
@@ -167,7 +168,7 @@ const Layout: React.FunctionComponent<LayoutProps> = ({ children }) => {
           </IconButton>
           <Link to="/" className={classes.homeButton}>
             <Typography variant="h6" noWrap>
-              {title !== "" ? title : "Keep Clone"}
+              {title !== "" ? Capitalize(title) : "Keep Clone"}
             </Typography>
           </Link>
         </Toolbar>
@@ -231,7 +232,7 @@ const Layout: React.FunctionComponent<LayoutProps> = ({ children }) => {
               <ListItemIcon>
                 <ArchiveIcon />
               </ListItemIcon>
-              <ListItemText primary="archive" />
+              <ListItemText primary="Archived" />
             </ListItem>
           </Link>
 

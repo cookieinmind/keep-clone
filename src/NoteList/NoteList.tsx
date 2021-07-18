@@ -29,9 +29,9 @@ const breakpoints = {
 };
 
 enum styles {
-  All,
-  Archived,
-  Bin,
+  All = "All",
+  Archived = "Archive",
+  Bin = "Bin",
 }
 
 const NoteList: React.FunctionComponent<NoteListProps> = ({
@@ -51,14 +51,15 @@ const NoteList: React.FunctionComponent<NoteListProps> = ({
   useEffect(() => {
     if (tagName) {
       setTitle(tagName);
-      setStyle(styles.Archived);
+      setStyle(styles.All);
     } else if (statusName) {
-      setTitle(statusName);
       switch (statusName) {
         case "archived":
+          setTitle(styles.Archived);
           setStyle(styles.Archived);
           break;
         case "deleted":
+          setTitle(styles.Bin);
           setStyle(styles.Bin);
           break;
         default:
