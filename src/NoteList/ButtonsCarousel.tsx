@@ -54,7 +54,7 @@ const ButtonsCarousel: React.FC<ButtonsCarouselProps> = ({
         </IconButton>
       </Tooltip>
 
-      {/* To implement */}
+      {/* To implement the "more" btn*/}
       {/* <Box className={c.more}>
         <Tooltip title="More">
           <IconButton className={c.button}>

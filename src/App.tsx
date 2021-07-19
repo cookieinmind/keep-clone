@@ -6,6 +6,7 @@ import NoteList from "./NoteList/NoteList";
 import { useServerContext } from "./context/ServerContext";
 import { Route, Switch } from "react-router-dom";
 import { useEffect } from "react";
+import ExtendedNoteCard from "./NoteList/ExpandedNoteCard";
 
 const useStyles = makeStyles({
   root: {
@@ -38,6 +39,8 @@ function App() {
           {/* Tags */}
           <Route path="/:tag?">
             <Box className={classes.root}>
+              {/* {notes && notes[0] && <ExtendedNoteCard note={notes[0]} />} */}
+
               <InputField />
 
               <NoteList

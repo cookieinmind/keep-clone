@@ -4,6 +4,7 @@ import Masonry from "react-masonry-css";
 import { useParams } from "react-router-dom";
 import { useLayoutContext } from "../layout/Layout";
 import { Note, NoteStatus } from "../models/note";
+import ExtendedNoteCard from "./ExpandedNoteCard";
 import NoteCard from "./NoteCard";
 
 const useStyles = makeStyles({

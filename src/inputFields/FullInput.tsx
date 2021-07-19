@@ -123,7 +123,6 @@ export const FullInput: React.FC<iFullInputProps> = ({
           content={title}
           setContent={setTitle}
           tags={nameOfTags}
-          // onLostFocus={handleLostOfFocus}
           setTags={setNameOfTags}
         />
         {/* Content */}
@@ -134,7 +133,6 @@ export const FullInput: React.FC<iFullInputProps> = ({
           setContent={setContent}
           tags={nameOfTags}
           setTags={setNameOfTags}
-          // onLostFocus={handleLostOfFocus}
           inputRef={contentRef}
         />
       </Box>
