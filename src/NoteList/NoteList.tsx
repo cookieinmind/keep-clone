@@ -1,16 +1,15 @@
-import { makeStyles, Box, Typography } from "@material-ui/core";
+import { makeStyles, Box, Typography, Grid } from "@material-ui/core";
 import { useEffect, useState } from "react";
-import Masonry from "react-masonry-css";
+// import Masonry from "react-masonry-css";
 import { useParams } from "react-router-dom";
 import { useLayoutContext } from "../layout/Layout";
 import { Note, NoteStatus } from "../models/note";
-import ExtendedNoteCard from "./ExpandedNoteCard";
 import NoteCard from "./NoteCard";
 
 const useStyles = makeStyles({
   root: {
     display: "flex",
-    width: "100%",
+    // width: "100%",
     flexDirection: "column",
     gap: "2rem",
   },
@@ -22,12 +21,12 @@ export interface NoteListProps {
   archiveNote: (note: Note) => void;
 }
 
-const breakpoints = {
-  default: 4,
-  1100: 3,
-  700: 2,
-  450: 1,
-};
+// const breakpoints = {
+//   default: 4,
+//   1100: 3,
+//   700: 2,
+//   450: 1,
+// };
 
 enum styles {
   All = "All",
@@ -112,7 +111,7 @@ const NoteList: React.FunctionComponent<NoteListProps> = ({
         </Typography>
       )}
 
-      <Masonry
+      {/* <Masonry
         breakpointCols={breakpoints}
         className="my-masonry-grid"
         columnClassName="my-masonry-grid_column"
@@ -126,7 +125,19 @@ const NoteList: React.FunctionComponent<NoteListProps> = ({
             />
           </div>
         ))}
-      </Masonry>
+      </Masonry> */}
+
+      <Grid container spacing={3}>
+        {notesToShow.map((note) => (
+          <Grid item xs={12} sm={6} md={4} lg={3} key={note.id}>
+            <NoteCard
+              note={note}
+              deteleteNote={deteleteNote}
+              archiveNote={archiveNote}
+            />
+          </Grid>
+        ))}
+      </Grid>
     </Box>
   );
 };
