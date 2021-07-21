@@ -80,13 +80,10 @@ const ServerContextProvider: React.FunctionComponent<ContextProps> = ({
   };
 
   const createNote = async (note: Note) => {
-    console.log("creating");
     await saveNoteAsyncMutation(note);
     resetNoteQueries();
 
     const newTags = note.tags?.filter((tag) => {
-      console.log(tagsOnServer, tag);
-
       //compare names so it ignores the id
       return tagsOnServer?.some((t) => t.name === tag.name) === false;
     });
@@ -119,7 +116,6 @@ const ServerContextProvider: React.FunctionComponent<ContextProps> = ({
   };
 
   const archiveNote = async (note: Note) => {
-    console.log("server context", "archiving");
     note.status = NoteStatus.archived;
     await updateNoteAsync(note);
     resetNoteQueries();

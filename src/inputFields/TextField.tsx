@@ -99,7 +99,6 @@ const TextField: React.FC<TextFieldProps> = ({
     let newTag = oldTag;
 
     if (newTerm === "Backspace") {
-      console.log(newTerm, oldTag);
       if (newTag.length < 1) isCreatingTag.current = false;
       const oneLessTerm = newTag.slice(0, newTag.length - 1);
       newTag = oneLessTerm;

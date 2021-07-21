@@ -106,7 +106,6 @@ const ExtendedNoteCard: React.FC<ExtendedNoteCardProps> = ({ note }) => {
     setContent(note.content);
     setTags(note.tags);
     setNameOfTags(tagsToStrings(note.tags));
-    console.log(nameOfTags, note.tags);
     setTitle(note.title ? note.title : "");
   }, [note, setContent, setTitle, setNameOfTags]);
 
@@ -128,7 +127,6 @@ const ExtendedNoteCard: React.FC<ExtendedNoteCardProps> = ({ note }) => {
       status: NoteStatus.alive,
     };
 
-    console.log("submiting this note:", newNote);
     // addNote(note);
     // hideThisComponent();
   };
