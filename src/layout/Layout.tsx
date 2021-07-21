@@ -1,7 +1,7 @@
 import { makeStyles } from "@material-ui/core";
 import React from "react";
 import clsx from "clsx";
-import { createStyles, useTheme, Theme } from "@material-ui/core/styles";
+import { useTheme, Theme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -20,29 +20,29 @@ import ArchiveIcon from "@material-ui/icons/Archive";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { useServerContext } from "../context/ServerContext";
 import LabelIcon from "@material-ui/icons/Label";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useContext, createContext } from "react";
 import { Capitalize } from "../utlis/stringHelpers";
 
 const drawerWidth = 240;
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
+const useStyles = makeStyles((props: Theme) => {
+  return {
     root: {
       display: "flex",
       height: "100%",
       width: "100%",
     },
     appBar: {
-      zIndex: theme.zIndex.drawer + 1,
-      transition: theme.transitions.create(["width", "margin"], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
+      zIndex: props.zIndex.drawer + 1,
+      transition: props.transitions.create(["width", "margin"], {
+        easing: props.transitions.easing.sharp,
+        duration: props.transitions.duration.leavingScreen,
       }),
     },
     homeButton: {
       textDecoration: "none",
-      color: "#fff",
+      color: props.palette.text.primary,
     },
     sidebarLink: {
       textDecoration: "none",
@@ -52,13 +52,13 @@ const useStyles = makeStyles((theme: Theme) =>
     appBarShift: {
       marginLeft: drawerWidth,
       width: `calc(100% - ${drawerWidth}px)`,
-      transition: theme.transitions.create(["width", "margin"], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
+      transition: props.transitions.create(["width", "margin"], {
+        easing: props.transitions.easing.sharp,
+        duration: props.transitions.duration.enteringScreen,
       }),
     },
     menuButton: {
-      marginRight: 36,
+      // marginRight: "36px",
     },
     hide: {
       display: "none",
@@ -70,36 +70,39 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     drawerOpen: {
       width: drawerWidth,
-      transition: theme.transitions.create("width", {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
+      transition: props.transitions.create("width", {
+        easing: props.transitions.easing.sharp,
+        duration: props.transitions.duration.enteringScreen,
       }),
     },
     drawerClose: {
-      transition: theme.transitions.create("width", {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
+      transition: props.transitions.create("width", {
+        easing: props.transitions.easing.sharp,
+        duration: props.transitions.duration.leavingScreen,
       }),
       overflowX: "hidden",
-      width: theme.spacing(7) + 1,
-      [theme.breakpoints.up("sm")]: {
-        width: theme.spacing(9) + 1,
+      width: props.spacing(7) + 1,
+      [props.breakpoints.up("sm")]: {
+        width: props.spacing(9) + 1,
       },
     },
     toolbar: {
+      gap: "36px",
+    },
+    offset: {
       display: "flex",
       alignItems: "center",
       justifyContent: "flex-end",
-      padding: theme.spacing(0, 1),
+      padding: props.spacing(0, 1),
       // necessary for content to be below app bar
-      ...theme.mixins.toolbar,
+      ...props.mixins.toolbar,
     },
     content: {
       flexGrow: 1,
-      padding: theme.spacing(3),
+      padding: props.spacing(3),
     },
-  })
-);
+  };
+});
 
 export interface LayoutProps {
   children: React.ReactNode;
@@ -124,10 +127,12 @@ export const useLayoutContext = () => {
 
 const Layout: React.FunctionComponent<LayoutProps> = ({ children }) => {
   //UI stuff
-  const classes = useStyles();
   const theme = useTheme();
+  const classes = useStyles(theme);
   const [open, setOpen] = React.useState(false);
   const [title, setTitle] = React.useState<string>("");
+
+  const history = useHistory();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -145,17 +150,23 @@ const Layout: React.FunctionComponent<LayoutProps> = ({ children }) => {
     setTitle,
   };
 
+  const goTo = (link: string) => {
+    // console.log("going to", link);
+    history.push(link);
+  };
+
   //!Return
   return (
     <div className={classes.root}>
       {/* Appbar */}
       <AppBar
         position="fixed"
+        color="primary"
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
         })}
       >
-        <Toolbar>
+        <Toolbar className={classes.toolbar}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -167,6 +178,7 @@ const Layout: React.FunctionComponent<LayoutProps> = ({ children }) => {
           >
             <MenuIcon />
           </IconButton>
+
           <Link to="/" className={classes.homeButton}>
             <Typography variant="h6" noWrap>
               {title !== "" ? Capitalize(title) : "Keep Clone"}
@@ -189,7 +201,7 @@ const Layout: React.FunctionComponent<LayoutProps> = ({ children }) => {
           }),
         }}
       >
-        <div className={classes.toolbar}>
+        <div className={classes.offset}>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "rtl" ? (
               <ChevronRightIcon />
@@ -201,32 +213,34 @@ const Layout: React.FunctionComponent<LayoutProps> = ({ children }) => {
 
         <Divider />
 
+        {/* Tags & Home */}
         <List>
-          <Link to="/" className={classes.sidebarLink}>
-            <ListItem button>
-              <ListItemIcon>
-                <HomeRoundedIcon />
-              </ListItemIcon>
-              <ListItemText primary={"Keep Clone"} />
-            </ListItem>
-          </Link>
+          <ListItem
+            button
+            className={classes.sidebarLink}
+            onClick={(event) => goTo("/")}
+          >
+            <ListItemIcon>
+              <HomeRoundedIcon />
+            </ListItemIcon>
+            <ListItemText primary={"Keep Clone"} />
+          </ListItem>
 
           {tags && tags.length > 0 && <Divider />}
 
           {tags &&
             tags.map((tag) => (
-              <Link
+              <ListItem
+                button
                 key={tag.name}
-                to={"/" + tag.name}
                 className={classes.sidebarLink}
+                onClick={(e) => goTo("/" + tag.name)}
               >
-                <ListItem button>
-                  <ListItemIcon>
-                    <LabelIcon />
-                  </ListItemIcon>
-                  <ListItemText primary={tag.name} />
-                </ListItem>
-              </Link>
+                <ListItemIcon>
+                  <LabelIcon />
+                </ListItemIcon>
+                <ListItemText primary={tag.name} />
+              </ListItem>
             ))}
         </List>
 
@@ -235,38 +249,37 @@ const Layout: React.FunctionComponent<LayoutProps> = ({ children }) => {
         {/* Archived and Deleted */}
         <List>
           {/* Archived */}
-          <Link
-            key="Archived"
-            to="/status/archived"
+          <ListItem
+            button
+            onClick={(e) => goTo("/status/archived")}
             className={classes.sidebarLink}
+            key="Archived"
           >
-            <ListItem button>
-              <ListItemIcon>
-                <ArchiveIcon />
-              </ListItemIcon>
-              <ListItemText primary="Archived" />
-            </ListItem>
-          </Link>
+            <ListItemIcon>
+              <ArchiveIcon />
+            </ListItemIcon>
+            <ListItemText primary="Archived" />
+          </ListItem>
 
           {/* Deleted */}
-          <Link
-            key="Deleted"
-            to="/status/deleted"
+          <ListItem
+            button
+            onClick={(e) => goTo("/status/deleted")}
             className={classes.sidebarLink}
+            key="Deleted"
+            alignItems="flex-start"
           >
-            <ListItem button>
-              <ListItemIcon>
-                <DeleteIcon />
-              </ListItemIcon>
-              <ListItemText primary="Bin" />
-            </ListItem>
-          </Link>
+            <ListItemIcon>
+              <DeleteIcon />
+            </ListItemIcon>
+            <ListItemText primary="Bin" />
+          </ListItem>
         </List>
       </Drawer>
 
       {/* Main */}
       <main className={classes.content}>
-        <div className={classes.toolbar} />
+        <div className={classes.offset} />
         <LayoutContext.Provider value={state}>
           {children}
         </LayoutContext.Provider>

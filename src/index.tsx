@@ -6,10 +6,20 @@ import { BrowserRouter } from "react-router-dom";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { QueryClient, QueryClientProvider } from "react-query";
 import ServerContextProvider from "./context/ServerContext";
+import { ThemeProvider } from "@material-ui/styles";
+import { createTheme } from "@material-ui/core";
 
 const queryClient = new QueryClient();
-
-console.log(process.env.PUBLIC_URL);
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#fdd835",
+    },
+    secondary: {
+      main: "#311b92",
+    },
+  },
+});
 
 ReactDOM.render(
   <React.StrictMode>
@@ -17,7 +27,9 @@ ReactDOM.render(
     <QueryClientProvider client={queryClient}>
       <ServerContextProvider>
         <BrowserRouter basename={process.env.PUBLIC_URL}>
-          <App></App>
+          <ThemeProvider theme={theme}>
+            <App></App>
+          </ThemeProvider>
         </BrowserRouter>
       </ServerContextProvider>
     </QueryClientProvider>
