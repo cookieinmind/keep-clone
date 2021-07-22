@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core";
+import { Box, CssBaseline, makeStyles } from "@material-ui/core";
 import React from "react";
 import clsx from "clsx";
 import { useTheme, Theme } from "@material-ui/core/styles";
@@ -23,46 +23,63 @@ import LabelIcon from "@material-ui/icons/Label";
 import { Link, useHistory } from "react-router-dom";
 import { useContext, createContext } from "react";
 import { Capitalize } from "../utlis/stringHelpers";
+import { useEffect } from "react";
 
 const drawerWidth = 240;
 
-const useStyles = makeStyles((props: Theme) => {
+const useStyles = makeStyles((theme: Theme) => {
   return {
     root: {
       display: "flex",
-      height: "100%",
-      width: "100%",
+      // height: "100%",
+      // width: "100%",
     },
     appBar: {
-      zIndex: props.zIndex.drawer + 1,
-      transition: props.transitions.create(["width", "margin"], {
-        easing: props.transitions.easing.sharp,
-        duration: props.transitions.duration.leavingScreen,
+      zIndex: theme.zIndex.drawer + 1,
+      transition: theme.transitions.create(["width", "margin"], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
       }),
-    },
-    homeButton: {
-      textDecoration: "none",
-      color: props.palette.text.primary,
-    },
-    sidebarLink: {
-      textDecoration: "none",
-      color: "#121212",
-      textTransform: "capitalize",
     },
     appBarShift: {
       marginLeft: drawerWidth,
       width: `calc(100% - ${drawerWidth}px)`,
-      transition: props.transitions.create(["width", "margin"], {
-        easing: props.transitions.easing.sharp,
-        duration: props.transitions.duration.enteringScreen,
+      transition: theme.transitions.create(["width", "margin"], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.enteringScreen,
       }),
+    },
+    homeButton: {
+      textDecoration: "none",
+      color: theme.palette.text.primary,
+    },
+    sidebarLink: {
+      textDecoration: "none",
+      color: "#121212",
     },
     menuButton: {
       // marginRight: "36px",
     },
+    nav: {
+      display: "flex",
+      flexDirection: "column",
+    },
+    navItem: {
+      textTransform: "capitalize",
+      cursor: "pointer",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "flex-start",
+      padding: "0.5rem 1rem",
+      width: "100%",
+      position: "relative",
+      boxSizing: "border-box",
+      textAlign: "left",
+    },
     hide: {
       display: "none",
     },
+
     drawer: {
       width: drawerWidth,
       flexShrink: 0,
@@ -70,20 +87,20 @@ const useStyles = makeStyles((props: Theme) => {
     },
     drawerOpen: {
       width: drawerWidth,
-      transition: props.transitions.create("width", {
-        easing: props.transitions.easing.sharp,
-        duration: props.transitions.duration.enteringScreen,
+      transition: theme.transitions.create("width", {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.enteringScreen,
       }),
     },
     drawerClose: {
-      transition: props.transitions.create("width", {
-        easing: props.transitions.easing.sharp,
-        duration: props.transitions.duration.leavingScreen,
+      transition: theme.transitions.create("width", {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
       }),
       overflowX: "hidden",
-      width: props.spacing(7) + 1,
-      [props.breakpoints.up("sm")]: {
-        width: props.spacing(9) + 1,
+      width: theme.spacing(7) + 1,
+      [theme.breakpoints.up("sm")]: {
+        width: theme.spacing(9) + 1,
       },
     },
     toolbar: {
@@ -93,13 +110,13 @@ const useStyles = makeStyles((props: Theme) => {
       display: "flex",
       alignItems: "center",
       justifyContent: "flex-end",
-      padding: props.spacing(0, 1),
+      padding: theme.spacing(0, 1),
       // necessary for content to be below app bar
-      ...props.mixins.toolbar,
+      ...theme.mixins.toolbar,
     },
     content: {
       flexGrow: 1,
-      padding: props.spacing(3),
+      padding: theme.spacing(3),
     },
   };
 });
@@ -132,6 +149,12 @@ const Layout: React.FunctionComponent<LayoutProps> = ({ children }) => {
   const [open, setOpen] = React.useState(false);
   const [title, setTitle] = React.useState<string>("");
 
+  const primaryColor = React.useRef<string>(theme.palette.primary.main);
+
+  useEffect(() => {
+    primaryColor.current = theme.palette.primary.main;
+  }, [theme]);
+
   const history = useHistory();
 
   const handleDrawerOpen = () => {
@@ -158,10 +181,15 @@ const Layout: React.FunctionComponent<LayoutProps> = ({ children }) => {
   //!Return
   return (
     <div className={classes.root}>
+      <CssBaseline />
       {/* Appbar */}
       <AppBar
+        style={{
+          background: primaryColor.current,
+        }}
+        id="#header"
         position="fixed"
-        color="primary"
+        // color="primary"
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
         })}
@@ -214,58 +242,51 @@ const Layout: React.FunctionComponent<LayoutProps> = ({ children }) => {
         <Divider />
 
         {/* Tags & Home */}
-        <List>
-          <ListItem
-            button
-            className={classes.sidebarLink}
-            onClick={(event) => goTo("/")}
-          >
+        <Box className={classes.nav}>
+          <Box className={classes.navItem} onClick={(event) => goTo("/")}>
             <ListItemIcon>
               <HomeRoundedIcon />
             </ListItemIcon>
             <ListItemText primary={"Keep Clone"} />
-          </ListItem>
+          </Box>
 
           {tags && tags.length > 0 && <Divider />}
 
           {tags &&
             tags.map((tag) => (
-              <ListItem
-                button
+              <Box
                 key={tag.name}
-                className={classes.sidebarLink}
+                className={classes.navItem}
                 onClick={(e) => goTo("/" + tag.name)}
               >
                 <ListItemIcon>
                   <LabelIcon />
                 </ListItemIcon>
                 <ListItemText primary={tag.name} />
-              </ListItem>
+              </Box>
             ))}
-        </List>
+        </Box>
 
         <Divider />
 
         {/* Archived and Deleted */}
-        <List>
+        <Box className={classes.nav}>
           {/* Archived */}
-          <ListItem
-            button
+          <Box
             onClick={(e) => goTo("/status/archived")}
-            className={classes.sidebarLink}
+            className={classes.navItem}
             key="Archived"
           >
             <ListItemIcon>
               <ArchiveIcon />
             </ListItemIcon>
             <ListItemText primary="Archived" />
-          </ListItem>
+          </Box>
 
           {/* Deleted */}
-          <ListItem
-            button
+          <Box
             onClick={(e) => goTo("/status/deleted")}
-            className={classes.sidebarLink}
+            className={classes.navItem}
             key="Deleted"
             alignItems="flex-start"
           >
@@ -273,8 +294,8 @@ const Layout: React.FunctionComponent<LayoutProps> = ({ children }) => {
               <DeleteIcon />
             </ListItemIcon>
             <ListItemText primary="Bin" />
-          </ListItem>
-        </List>
+          </Box>
+        </Box>
       </Drawer>
 
       {/* Main */}
